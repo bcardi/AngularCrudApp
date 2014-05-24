@@ -1,0 +1,62 @@
+<div id="messages" class="alert alert-success" data-ng-show="dc.messages" data-ng-bind="dc.messages"></div>
+
+<div class="row">
+    <label class="col-sm-1 control-label">Institution</label>
+    <div class="col-sm-1">{{dc.viewModel.institution}}</div>
+    <div class="col-sm-1">{{dc.viewModel.institutionName}}</div>
+    <label class="col-sm-2 control-label">FIS Work Request #</label>
+    <div class="col-sm-1">{{dc.viewModel.id}}</div>
+    <label class="col-sm-1 control-label">State</label>
+    <div class="col-sm-1">{{dc.viewModel.stateId}}</div>
+    <div class="col-sm-4"><a href="#/work-requests" class="pull-right">Show List</a></div>
+</div>
+
+<div class="row">
+    <label class="col-sm-1 control-label">Device ID</label>
+    <div class="col-sm-1">{{dc.viewModel.deviceId}}</div>
+    <div class="col-sm-1"></div>
+    <label class="col-sm-2 control-label">Customer Work Order #</label>
+    <div class="col-sm-1">{{dc.viewModel.custRequestNo}}</div>
+</div>
+
+<!--
+<div>
+    <button class="btn btn-default" ng-click="dc.expandAll()">Expand All</button>
+</div>
+-->
+
+<div>
+    <tabset justified="true">
+        <tab heading="Request" disabled="dc.isTrue(dc.metadata.form.tabs.request.isDisabled,false)">
+            <fis-editable-form fis-id="thisForm" fis-show-editable="dc.showEditable" readonly="dc.isReadonly">
+                <div ng-include="'app/work-requests/detail/request.html'"></div>
+            </fis-editable-form>
+        </tab>
+        <tab heading="Location" disabled="dc.isTrue(dc.metadata.form.tabs.location.isDisabled,true)">
+            <fis-editable-form fis-id="thisForm" fis-show-editable="dc.showEditable" readonly="dc.isReadonly">
+                <div ng-include="'app/work-requests/detail/location.html'"></div>
+            </fis-editable-form>
+        </tab>
+        <tab heading="Functionality" disabled="dc.isTrue(dc.metadata.form.tabs.functionality.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/functionality.html'"></div>
+        </tab>
+        <tab heading="Telecom" disabled="dc.isTrue(dc.metadata.form.tabs.telecom.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/telecom.html'"></div>
+        </tab>
+        <tab heading="Surcharging" disabled="dc.isTrue(dc.metadata.form.tabs.surcharging.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/surcharging.html'"></div>
+        </tab>
+        <tab heading="Monitoring" disabled="dc.isTrue(dc.metadata.form.tabs.monitoring.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/monitoring.html'"></div>
+        </tab>
+        <tab heading="Contacts" disabled="dc.isTrue(dc.metadata.form.tabs.contacts.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/contacts.html'"></div>
+        </tab>
+        <tab heading="Comments" disabled="dc.isTrue(dc.metadata.form.tabs.comments.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/comments.html'"></div>
+        </tab>
+        <tab heading="Staging" disabled="dc.isTrue(dc.metadata.form.tabs.staging.isDisabled,true)">
+            <div ng-include="'app/work-requests/detail/staging.html'"></div>
+        </tab>
+    </tabset>
+</div>

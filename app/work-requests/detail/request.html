@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label class="col-sm-3 control-label">FIS Work Request #</label>
+    <div class="col-sm-9">
+        <div class="form-control-static">{{dc.viewModel.id}}</div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="custRequestNo" class="col-sm-3 control-label">Customer Work Order #</label>
+    <div class="col-sm-9">
+        <span editable-text="dc.viewModel.custRequestNo" e-name="custRequestNo"
+              e-required>{{ dc.viewModel.custRequestNo }}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="institution" class="col-sm-3 control-label">Institution ID</label>
+    <div class="col-sm-9">
+        <span editable-text="dc.viewModel.institution" e-name="institution"
+              e-required>{{ dc.viewModel.institution }}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="deviceId" class="col-sm-3 control-label">Device ID</label>
+    <div class="col-sm-9">
+        <span editable-text="dc.viewModel.deviceId" e-name="deviceId"
+              e-required>{{ dc.viewModel.deviceId }}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="installDate" class="col-sm-3 control-label">Install Date</label>
+    <div class="col-sm-9">
+        <span editable-date="dc.viewModel.installDate" e-name="installDate"
+              e-required>{{ dc.viewModel.installDate }}</span>
+    </div>
+</div>

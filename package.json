@@ -1,0 +1,32 @@
+{
+  "name": "AngularTodoES6",
+  "version": "0.0.1",
+  "description": "Reference app to demonstrate some HTML5 features",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-clean": "^0.2.4",
+    "gulp-livereload": "^1.5.0",
+    "gulp-plumber": "^0.6.1",
+    "gulp-traceur": "^0.5.0",
+    "gulp-watch": "^0.6.4",
+    "gulp-util": "^2.2.14",
+    "dgeni": "^0.3.0",
+    "canonical-path": "0.0.2",
+    "dgeni-packages": "^0.9.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/happysantoo/AngularTodoES6.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/happysantoo/AngularTodoES6/issues"
+  },
+  "homepage": "https://github.com/happysantoo/AngularTodoES6"
+}

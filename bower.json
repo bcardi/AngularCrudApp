@@ -1,0 +1,22 @@
+{
+  "name": "AngularTodoES6",
+  "version": "0.0.0",
+  "homepage": "https://github.com/happysantoo/AngularTodoES6",
+  "authors": [
+    "Santhosh Kuppusamy <santoo.k@gmail.com>"
+  ],
+  "description": "angular ES6 reference app",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-xeditable": "~0.1.8",
+    "lodash": "~2.4.1"
+  }
+}

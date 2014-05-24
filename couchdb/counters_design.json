@@ -1,0 +1,5 @@
+{
+    "updates": {
+        "counter": "function (doc, req){ if (!doc.count) doc.count = 0; doc.count++; return [doc, JSON.stringify({'counter': doc.count})]; }"
+    }
+}

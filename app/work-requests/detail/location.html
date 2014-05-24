@@ -1,0 +1,120 @@
+<accordion close-others=false>
+    <accordion-group is-open="dc.isTrue(dc.metadata.form.sections.address.isOpen,true)"
+                     is-disabled="false">
+
+        <accordion-heading>
+            ATM Location<i class="pull-right glyphicon"
+                           ng-class="{'glyphicon-chevron-down': dc.metadata.form.sections.address.isOpen, 'glyphicon-chevron-right': !dc.metadata.form.sections.address.isOpen}"></i>
+        </accordion-heading>
+
+        <div class="form-group">
+            <label for="locationName"
+                   class="col-sm-3 control-label required">Location Name <span style="font-size: x-small">(optional)</span></label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationName"
+                      e-name="locationName"
+                      e-placeholder="optional">{{ dc.viewModel.locationName }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationAddress"
+                   class="col-sm-3 control-label">Address</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationAddress"
+                      e-name="locationAddress"
+                      e-required>{{ dc.viewModel.locationAddress }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationCity"
+                   class="col-sm-3 control-label">City</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationCity"
+                      e-name="locationCity"
+                      e-required>{{ dc.viewModel.locationCity }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationState"
+                   class="col-sm-3 control-label">State</label>
+            <div class="col-sm-9">
+                <span editable-select="dc.viewModel.locationState"
+                      e-name="locationState"
+                      e-ng-options="item.value as item.text for item in dc.metadata.form.choiceGroups['states']">{{ dc.viewModel.locationState }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationPostalCode"
+                   class="col-sm-3 control-label">Postal Code</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationPostalCode"
+                      e-name="locationPostalCode"
+                      e-required>{{ dc.viewModel.locationPostalCode }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationCountry"
+                   class="col-sm-3 control-label">Country</label>
+            <div class="col-sm-9">
+                <span editable-select="dc.viewModel.locationCountry"
+                      e-name="locationCountry"
+                      e-required
+                      e-ng-options="item.value as item.text for item in dc.metadata.form.choiceGroups['countries']">{{ dc.viewModel.locationCountry }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationCounty"
+                   class="col-sm-3 control-label">County</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationCounty"
+                      e-name="locationCounty">{{ dc.viewModel.locationCounty }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationPhone"
+                   class="col-sm-3 control-label">Phone #</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationPhone"
+                      e-name="locationPhone">{{ dc.viewModel.locationPhone }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locationSiteConstruction"
+                   class="col-sm-3 control-label">Is this site under construction or being remodeled?</label>
+            <div class="col-sm-9">
+                <span editable-checkbox="dc.viewModel.locationSiteConstruction"
+                      e-name="locationSiteConstruction">{{ dc.viewModel.locationSiteConstruction | booleanAsYesNo }}</span>
+            </div>
+        </div>
+
+    </accordion-group>
+
+    <accordion-group is-open="dc.isTrue(dc.metadata.form.sections.description.isOpen,true)"
+                     is-disabled="false">
+
+        <accordion-heading>
+            Location Description<i class="pull-right glyphicon"
+                                   ng-class="{'glyphicon-chevron-down': dc.metadata.form.sections.description.isOpen, 'glyphicon-chevron-right': !dc.metadata.form.sections.description.isOpen}"></i>
+        </accordion-heading>
+
+        <div class="form-group">
+            <label for="locationDescription"
+                   class="col-sm-3 control-label">Location Description</label>
+            <div class="col-sm-9">
+                <span editable-text="dc.viewModel.locationDescription"
+                      e-name="locationDescription">{{ dc.viewModel.locationDescription }}</span>
+            </div>
+        </div>
+
+    </accordion-group>
+
+
+</accordion>

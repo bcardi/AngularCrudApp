@@ -1,0 +1,48 @@
+<div>
+    <!--Sidebar content-->
+    Search: <input fis-autofocus="dc.resetFocus" ng-model="query">
+    Sort by:
+    <select ng-model="dc.orderProp">
+        <option value="title">Title</option>
+        <option value="id">Id</option>
+    </select>
+    <button class="btn btn-default" ng-click="dc.getList()">Refresh</button>
+    <a class="btn btn-default" href="#/work-requests/new">New</a>
+    <p />
+</div>
+<!--Body content-->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Req#</th>
+        <th>Work#</th>
+        <th>Req Type</th>
+        <th>Req State</th>
+        <th>Exp</th>
+        <th>Institution</th>
+        <th>Device</th>
+        <th>Install Date</th>
+        <th>Tab Status</th>
+        <th>Created<br/>Modified</th>
+        <th>Created By<br/>Modified By</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="item in dc.viewModel | filter:query | orderBy:reqNumber">
+        <td><a href="#/work-requests/{{item.id}}">{{item.id}}</a></td>
+        <td>{{item.custRequestNo}}</td>
+        <td>{{item.requestTypeId}}</td>
+        <td>{{item.stateId}}</td>
+        <td>{{item.expedited}}</td>
+        <td>{{item.institution}}</td>
+        <td>{{item.deviceId}}</td>
+        <td>{{item.installDate}}</td>
+        <td>{{item.tabStatus}}</td>
+        <td>{{item.createdAt | date:'shortDate'}}<br/>{{item.updatedAt | date:'shortDate'}}</td>
+        <td>{{item.createdBy}}<br/>{{item.updatedBy}}</td>
+        <td>
+            <a href="#/work-requests/{{item.id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
+            <a href="" ng-click="dc.deleteItem(item)"><span class="glyphicon glyphicon-remove"></span></a>
+        </td>
+    </tr>
+</table>
