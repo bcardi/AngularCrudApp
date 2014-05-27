@@ -3,6 +3,15 @@
 /**
  * Created by Bob on 5/5/2014.
  */
+/**
+ * @area api
+ * @module angularCrud
+ * @ngdoc type
+ * @name BaseController
+ * @param {object} context ????.
+ * @description
+ * ????
+ */
 class BaseController {
 
     public context: any;

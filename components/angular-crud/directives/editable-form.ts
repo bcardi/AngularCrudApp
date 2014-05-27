@@ -2,8 +2,20 @@
 /**
  * Created by Bob on 5/15/2014.
  */
+/**
+ * @area api
+ * @module angularCrud
+ * @ngdoc directive
+ * @name crudEditableForm
+ * @restrict E
+ * @param {string} form-id Form ID.
+ * @param {expression} crud-show-editable If the expression is truthy, then the form will show in edit mode by default.
+ * @param {expression} readonly If the expression is truthy, then the form will display in read only mode and the user will not be allowed to make changes.
+ * @description
+ * FIS extension of the x-editable form. Provides standard layout and actions.
+ */
 angular.module('angularCrud')
-    .directive('fisEditableForm', function() {
+    .directive('crudEditableForm', function() {
         return {
             restrict: 'E',
             transclude: true,

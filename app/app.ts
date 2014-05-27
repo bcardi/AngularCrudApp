@@ -5,7 +5,7 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-var app = angular.module('todoApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests'])
+var app = angular.module('crudApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests'])
     .config(["$routeProvider",
         function ($routeProvider) {
             $routeProvider
@@ -38,6 +38,12 @@ var app = angular.module('todoApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngG
                     templateUrl: 'app/work-requests/list.html',
                     controller: 'WorkRequestListController',
                     controllerAs: "dc"
+                })
+                .when('/docs', {
+                    templateUrl: 'api/angularCrud/index.html'
+                })
+                .when('/api', {
+                    templateUrl: 'api/angularCrud/index.html'
                 })
                 .when('/', {
                     templateUrl: 'app/home.html'

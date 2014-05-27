@@ -1,6 +1,6 @@
 <form id="{{ fisId || 'thisForm' }}" name="{{ fisId || 'thisForm' }}"
       novalidate editable-form class="form-horizontal"
-      fis-show-editable="{{fisShowEditable}}"
+      crud-show-editable="{{fisShowEditable}}"
       onbeforesave="$parent.dc.validateForm(thisForm)"
       onaftersave="$parent.dc.doSubmit(thisForm.$valid)">
 

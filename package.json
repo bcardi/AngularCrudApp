@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Reference app to demonstrate some HTML5 features",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "marked": "^0.3.2"
+  },
   "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-clean": "^0.2.4",

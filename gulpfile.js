@@ -27,7 +27,7 @@ gulp.task('transpile',function(){
         .pipe(gulp.dest('out/app'));
 });
 
-gulp.task('dgeni', function() {
+gulp.task('dgeni-api', function() {
     var generateDocs = dgeni.generator('docs/dgeni.conf.js');
     return generateDocs();
 });

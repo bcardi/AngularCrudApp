@@ -1,15 +1,27 @@
-<h1>{{ doc.codeName }}</h1>
-<p>{{ doc.description }}</p>
+<h1>{$ doc.docType $}</h1>
+<h2>{$ doc.name $}</h2>
+<p>{$ doc.description $}</p>
 
 {% if doc.params %}
-<h2>Params</h2>
-<ul>
-    {% for param in doc.params %}
-    <li>
-        <strong>{{ param.name }}</strong> { {{ param.typeList }} } - {{ param.description }}
-    </li>
-    {% endfor %}
-</ul>
+<h2>Arguments</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Param</th>
+            <th>Type</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for param in doc.params %}
+        <tr>
+            <td>{{ param.name }}</td>
+            <td>{{ param.typeList }}</td>
+            <td>{{ param.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endif %}
 
 {% if doc.returns %}
@@ -17,4 +29,11 @@
 <p>
     { {{ doc.returns.typeList }} } - {{ doc.returns.description }}
 </p>
+{% endif %}
+
+{% if doc.examples %}
+        Hello
+    {% for example in doc.examples %}
+        {{example.name}}
+    {% endfor %}
 {% endif %}

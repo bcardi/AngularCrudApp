@@ -10,7 +10,7 @@ angular.module('angularCrud')
             link: function (scope, element, attrs) {
                 scope.$watch(attrs.fisShowEditableForm, function (value, element) {
                     if (angular.isDefined(value) && value) {
-                        var editableForm = scope.$eval(attrs.fisEditableForm);
+                        var editableForm = scope.$eval(attrs.crudEditableForm);
                         editableForm.$show();
                     } else {
                         editableForm.$cancel();

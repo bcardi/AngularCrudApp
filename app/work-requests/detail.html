@@ -28,14 +28,14 @@
 <div>
     <tabset justified="true">
         <tab heading="Request" disabled="dc.isTrue(dc.metadata.form.tabs.request.isDisabled,false)">
-            <fis-editable-form fis-id="thisForm" fis-show-editable="dc.showEditable" readonly="dc.isReadonly">
+            <crud-editable-form form-id="thisForm" crud-show-editable="dc.showEditable" readonly="dc.isReadonly">
                 <div ng-include="'app/work-requests/detail/request.html'"></div>
-            </fis-editable-form>
+            </crud-editable-form>
         </tab>
         <tab heading="Location" disabled="dc.isTrue(dc.metadata.form.tabs.location.isDisabled,true)">
-            <fis-editable-form fis-id="thisForm" fis-show-editable="dc.showEditable" readonly="dc.isReadonly">
+            <crud-editable-form form-id="thisForm" crud-show-editable="dc.showEditable" readonly="dc.isReadonly">
                 <div ng-include="'app/work-requests/detail/location.html'"></div>
-            </fis-editable-form>
+            </crud-editable-form>
         </tab>
         <tab heading="Functionality" disabled="dc.isTrue(dc.metadata.form.tabs.functionality.isDisabled,true)">
             <div ng-include="'app/work-requests/detail/functionality.html'"></div>

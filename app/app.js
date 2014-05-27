@@ -3,6 +3,16 @@
 /**
 * Created by Bob on 5/23/2014.
 */
+/**
+* @ngdoc module
+* @name angularCrud
+* @description
+*
+* # angularCrud (core module)
+* The angularCrud module ????
+*
+* <div doc-module-components="angularCrud"></div>
+*/
 angular.module('angularCrud', ['ngResource']);
 /**
 * Created by Bob on 5/17/2014.
@@ -20,7 +30,19 @@ filters.filter('booleanAsYesNo', function () {
 /**
 * Created by Bob on 5/5/2014.
 */
-angular.module('angularCrud').directive('fisAutofocus', [
+/**
+* @area api
+* @module angularCrud
+* @ngdoc directive
+* @name crudAutofocus
+* @element input
+* @restrict A
+* @param {expression} crudAutofocus If the expression is truthy, then the control will gain focus when the view is ready.
+* @description
+* Helper directive to place focus on the first form field. If multiple fields are marked with this attribute, then focus
+* will be placed on the first field.
+*/
+angular.module('angularCrud').directive('crudAutofocus', [
     '$timeout', function ($timeout) {
         "use strict";
 
@@ -28,7 +50,7 @@ angular.module('angularCrud').directive('fisAutofocus', [
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                scope.$watch(attrs.fisAutofocus, function (value) {
+                scope.$watch(attrs.crudAutofocus, function (value) {
                     if (angular.isDefined(value) && value) {
                         element[0].focus();
                         element[0].select();
@@ -41,7 +63,19 @@ angular.module('angularCrud').directive('fisAutofocus', [
 /**
 * Created by Bob on 5/15/2014.
 */
-angular.module('angularCrud').directive('fisEditableForm', function () {
+/**
+* @area api
+* @module angularCrud
+* @ngdoc directive
+* @name crudEditableForm
+* @restrict E
+* @param {string} form-id Form ID.
+* @param {expression} crud-show-editable If the expression is truthy, then the form will show in edit mode by default.
+* @param {expression} readonly If the expression is truthy, then the form will display in read only mode and the user will not be allowed to make changes.
+* @description
+* FIS extension of the x-editable form. Provides standard layout and actions.
+*/
+angular.module('angularCrud').directive('crudEditableForm', function () {
     return {
         restrict: 'E',
         transclude: true,
@@ -86,7 +120,7 @@ angular.module('angularCrud').directive('fisShowEditableForm', [
             link: function (scope, element, attrs) {
                 scope.$watch(attrs.fisShowEditableForm, function (value, element) {
                     if (angular.isDefined(value) && value) {
-                        var editableForm = scope.$eval(attrs.fisEditableForm);
+                        var editableForm = scope.$eval(attrs.crudEditableForm);
                         editableForm.$show();
                     } else {
                         editableForm.$cancel();
@@ -123,6 +157,15 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
 ///<reference path='references.ts' />
 /**
 * Created by Bob on 5/5/2014.
+*/
+/**
+* @area api
+* @module angularCrud
+* @ngdoc type
+* @name BaseController
+* @param {object} context ????.
+* @description
+* ????
 */
 var BaseController = (function () {
     function BaseController(context) {
@@ -778,7 +821,7 @@ angular.module('app.workRequests').controller('WorkRequestEditController', [
 /**
 * Created by e1009811 on 5/1/2014.
 */
-var app = angular.module('todoApp', ['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests']).config([
+var app = angular.module('crudApp', ['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests']).config([
     "$routeProvider",
     function ($routeProvider) {
         $routeProvider.when('/todos/new', {
@@ -805,6 +848,10 @@ var app = angular.module('todoApp', ['ui.bootstrap', 'xeditable', 'ngRoute', 'ng
             templateUrl: 'app/work-requests/list.html',
             controller: 'WorkRequestListController',
             controllerAs: "dc"
+        }).when('/docs', {
+            templateUrl: 'api/angularCrud/index.html'
+        }).when('/api', {
+            templateUrl: 'api/angularCrud/index.html'
         }).when('/', {
             templateUrl: 'app/home.html'
         });

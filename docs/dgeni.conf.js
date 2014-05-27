@@ -6,10 +6,12 @@ var path = require('canonical-path');
 
 module.exports = function(config) {
     // Use jsdocPackage
-    require('dgeni-packages/jsdoc')(config);
+    //require('dgeni-packages/jsdoc')(config);
 
     // And the nunjucks template renderer
-    require('dgeni-packages/nunjucks')(config);
+    //require('dgeni-packages/nunjucks')(config);
+
+    require('dgeni-packages/ngdoc')(config);
 
     // Set logging level
     config.set('logging.level', 'debug');
@@ -19,10 +21,10 @@ module.exports = function(config) {
         path.resolve(__dirname, 'templates')
     ]);
 
-    // You can specifiy which tempate should be used based on a pattern.
+    // You can specify which template should be used based on a pattern.
     // Currently we just use one template and don't need a pattern
     config.prepend('rendering.templatePatterns', [
-        'common.template.html'
+        'api/${ doc.docType }.template.html', 'common.template.html'
     ]);
 
     // This tells dgeni where to look for stuff
@@ -40,13 +42,13 @@ module.exports = function(config) {
     ]);
 
     // Our generated docs will be written here:
-    config.set('rendering.outputFolder', '../build/');
+    config.set('rendering.outputFolder', './');
     // The contentsFolder is the path relative to the outputFolder, which identifies the place where
     // the "standard" content files are stored.  For example, in the AngularJS application, the output
     // folder is `build/docs` but the way that the application is stored, means that we want the
     // content files (i.e. the files that contain the content of each "doc") to be stored in
     // `build/docs/partials`
-    config.set('rendering.contentsFolder', 'docs');
+    config.set('rendering.contentsFolder', './content');
 
     return config;
 };
