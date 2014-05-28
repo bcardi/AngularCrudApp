@@ -572,4 +572,4 @@ angular.module('angularCrud').controller('NavigationController', ['$location', f
 ///<reference path='directives/index.ts' />
 ///<reference path='services/index.ts' />
 ///<reference path='controllers/index.ts' />
-//# sourceMappingURL=angular-crud.js.map
+//# sourceMappingURL=angular-crud.d.ts.map

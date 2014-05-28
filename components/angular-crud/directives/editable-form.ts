@@ -12,7 +12,7 @@
  * @param {expression} crud-show-editable If the expression is truthy, then the form will show in edit mode by default.
  * @param {expression} readonly If the expression is truthy, then the form will display in read only mode and the user will not be allowed to make changes.
  * @description
- * FIS extension of the x-editable form. Provides standard layout and actions.
+ * Extends the x-editable form. Provides standard layout and actions.
  */
 angular.module('angularCrud')
     .directive('crudEditableForm', function() {
@@ -21,16 +21,16 @@ angular.module('angularCrud')
             transclude: true,
             templateUrl: 'components/angular-crud/directives/editable-form.html',
             scope: {
-                fisShowEditable: '&',
-                fisId: '@'
+                crudShowEditable: '&',
+                formId: '@'
             },
             link: function (scope, element, attrs) {
-                if (scope.fisId && scope.fisId != 'thisForm') {
-                    scope.thisForm = scope[scope.fisId];
+                if (scope.formId && scope.formId != 'thisForm') {
+                    scope.thisForm = scope[scope.formId];
                 }
                 var toggleEditableForm = function(value) {
                     "use strict";
-                    var formId = scope.fisId || 'thisForm';
+                    var formId = scope.formId || 'thisForm';
                     var editableForm = scope[formId];
                     if (editableForm) {
                         if (angular.isDefined(value) && value) {
@@ -40,7 +40,7 @@ angular.module('angularCrud')
                         }
                     }
                 }
-                scope.$watch(scope.fisShowEditable, function (value) {
+                scope.$watch(scope.crudShowEditable, function (value) {
                     if (value) {
                         toggleEditableForm(value);
                     }

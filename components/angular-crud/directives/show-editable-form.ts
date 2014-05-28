@@ -3,12 +3,12 @@
  * Created by Bob on 5/5/2014.
  */
 angular.module('angularCrud')
-    .directive('fisShowEditableForm', ['$timeout', function ($timeout) {
+    .directive('crudShowEditableForm', ['$timeout', function ($timeout) {
         "use strict";
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                scope.$watch(attrs.fisShowEditableForm, function (value, element) {
+                scope.$watch(attrs.crudShowEditableForm, function (value, element) {
                     if (angular.isDefined(value) && value) {
                         var editableForm = scope.$eval(attrs.crudEditableForm);
                         editableForm.$show();
