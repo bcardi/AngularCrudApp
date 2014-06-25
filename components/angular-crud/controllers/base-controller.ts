@@ -13,8 +13,9 @@
  * ????
  */
 class BaseController {
+    public ng: any;
 
-    public context: any;
+    public context: IControllerContext;
     public resetFocus: boolean;
     public isModelLoaded: boolean;
     public showEditable: boolean;
@@ -24,15 +25,26 @@ class BaseController {
     public metadata: any;
     public messages: string;
 
-    constructor(context) {
+    static addNgRef(context, item){
+        if (!context.ngRefs){
+            context.ngRefs = [];
+        }
+        context.ngRefs.push(item);
+    }
+
+    constructor($injector, context: IControllerContext) {
         "use strict";
+        var _this = this;
+
         this.context = context;
-        //this.resourceName = params.resourceName;
-        //this.formTag = params.formTag;
-        //this.$routeParams = $routeParams;
-        //this.$location = $location;
-        //this.service = ResourceService;
-        //this.metadataService = MetadataService;
+
+        // Load required angular references
+        var ngRefs = _.union(['$location', '$routeParams'], this.context.ngRefs);
+        this.ng = {};
+        for (var i=0,len=ngRefs.length;i<len;i++){
+            _this.ng[ngRefs[i]] = $injector.get(ngRefs[i]);
+        }
+
         this.resetFocus = true;
         this.isModelLoaded = false;
         this.showEditable = false;
@@ -228,7 +240,7 @@ class BaseController {
             this.refreshMetadata(result.metadata);
         }
         var newPath = this.context.resourceName + "/" + result.id;
-        this.context.$location.path(newPath);
+        this.ng.$location.path(newPath);
     }
 
     onUpdateItemError(result) {

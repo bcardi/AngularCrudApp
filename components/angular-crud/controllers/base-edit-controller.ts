@@ -8,9 +8,15 @@
 
 class BaseEditController extends BaseController {
 
+    constructor($injector, context){
+        "use strict";
+        BaseController.addNgRef(context,'$routeParams');
+        super($injector, context);
+    }
+
     getData() {
         "use strict";
-        this.getItem(this.context.$routeParams.id);
+        this.getItem(this.ng.$routeParams.id);
     }
 
     doSubmit(isValid){

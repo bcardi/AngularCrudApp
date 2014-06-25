@@ -7,22 +7,21 @@ class WorkRequestListController extends BaseListController {
 
     public orderProp: string;
 
-    constructor(context) {
+    constructor($injector, context) {
         "use strict";
-        super(context);
+        super($injector, context);
         this.orderProp = 'id';
     }
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestListController', ['$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-        ($routeParams, $location, $scope, ResourceService, MetadataService) => new WorkRequestListController(
+    .controller('WorkRequestListController', ['$injector', 'ResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestListController(
+            $injector,
             {
                 resourceName: "work-requests",
                 formTag: "list",
-                $routeParams: $routeParams,
-                $location: $location,
-                $scope: $scope,
+                ngRefs: [],
                 resourceService: ResourceService,
                 metadataService: MetadataService
             }

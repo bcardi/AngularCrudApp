@@ -6,8 +6,13 @@
  */
 
 var app = angular.module('crudApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests'])
-    .config(["$routeProvider",
-        function ($routeProvider) {
+    .config(["$routeProvider", "$locationProvider",
+        function ($routeProvider, $locationProvider) {
+
+            //commenting out this line (switching to hashbang mode) breaks the app
+            //-- unless # is added to the templates
+            //$locationProvider.html5Mode(true);
+
             $routeProvider
                 .when('/todos/new', {
                     templateUrl: 'app/todos/detail.html',

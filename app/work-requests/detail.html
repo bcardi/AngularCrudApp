@@ -1,22 +1,24 @@
 <div id="messages" class="alert alert-success" data-ng-show="dc.messages" data-ng-bind="dc.messages"></div>
 
-<div class="row">
-    <label class="col-sm-1 control-label">Institution</label>
-    <div class="col-sm-1">{{dc.viewModel.institution}}</div>
-    <div class="col-sm-1">{{dc.viewModel.institutionName}}</div>
-    <label class="col-sm-2 control-label">FIS Work Request #</label>
-    <div class="col-sm-1">{{dc.viewModel.id}}</div>
-    <label class="col-sm-1 control-label">State</label>
-    <div class="col-sm-1">{{dc.viewModel.stateId}}</div>
-    <div class="col-sm-4"><a href="#/work-requests" class="pull-right">Show List</a></div>
-</div>
+<div class="workspace-header">
+    <div class="row">
+        <label class="col-sm-1 control-label">Institution</label>
+        <div class="col-sm-1">{{dc.viewModel.institution}}</div>
+        <div class="col-sm-1">{{dc.viewModel.institutionName}}</div>
+        <label class="col-sm-2 control-label">FIS Work Request #</label>
+        <div class="col-sm-1">{{dc.viewModel.id}}</div>
+        <label class="col-sm-1 control-label">State</label>
+        <div class="col-sm-1">{{dc.viewModel.stateId}}</div>
+        <div class="col-sm-4"><a href="#/work-requests" class="pull-right">Show List</a></div>
+    </div>
 
-<div class="row">
-    <label class="col-sm-1 control-label">Device ID</label>
-    <div class="col-sm-1">{{dc.viewModel.deviceId}}</div>
-    <div class="col-sm-1"></div>
-    <label class="col-sm-2 control-label">Customer Work Order #</label>
-    <div class="col-sm-1">{{dc.viewModel.custRequestNo}}</div>
+    <div class="row">
+        <label class="col-sm-1 control-label">Device ID</label>
+        <div class="col-sm-1">{{dc.viewModel.deviceId}}</div>
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2 control-label">Customer Work Order #</label>
+        <div class="col-sm-1">{{dc.viewModel.custRequestNo}}</div>
+    </div>
 </div>
 
 <!--
@@ -25,7 +27,7 @@
 </div>
 -->
 
-<div>
+<div class="workspace-body">
     <tabset justified="true">
         <tab heading="Request" disabled="dc.isTrue(dc.metadata.form.tabs.request.isDisabled,false)">
             <crud-editable-form form-id="thisForm" crud-show-editable="dc.showEditable" readonly="dc.isReadonly">

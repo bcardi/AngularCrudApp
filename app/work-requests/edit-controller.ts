@@ -27,14 +27,13 @@ class WorkRequestEditController extends BaseEditController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestEditController', ['$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-        ($routeParams, $location, $scope, ResourceService, MetadataService) => new WorkRequestEditController(
+    .controller('WorkRequestEditController', ['$injector', 'ResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestEditController(
+            $injector,
             {
                 resourceName: "work-requests",
                 formTag: "detail",
-                $routeParams: $routeParams,
-                $location: $location,
-                $scope: $scope,
+                ngRefs: [],
                 resourceService: ResourceService,
                 metadataService: MetadataService
             }

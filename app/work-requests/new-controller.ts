@@ -5,9 +5,9 @@
 
 class WorkRequestNewController extends BaseNewController {
 
-    constructor(context) {
+    constructor($injector, context) {
         "use strict";
-        super(context);
+        super($injector, context);
         this.viewModel.requestTypeId = "ADDATM";
         this.viewModel.stateId = "DRAFT";
         this.viewModel.expedited = false;
@@ -44,14 +44,13 @@ class WorkRequestNewController extends BaseNewController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestNewController', ['$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-        ($routeParams, $location, $scope, ResourceService, MetadataService) => new WorkRequestNewController(
+    .controller('WorkRequestNewController', ['$injector', 'ResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestNewController(
+            $injector,
             {
                 resourceName: "work-requests",
                 formTag: "detail",
-                $routeParams: $routeParams,
-                $location: $location,
-                $scope: $scope,
+                ngRefs: [],
                 resourceService: ResourceService,
                 metadataService: MetadataService
             }

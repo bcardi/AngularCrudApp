@@ -4,7 +4,7 @@
  * Created by Bob on 5/4/2014.
  */
 
-class MetadataService {
+class MetadataService implements IMetadataService {
 
     public resource:any;
 

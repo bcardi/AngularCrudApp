@@ -22,6 +22,10 @@ npm install -g gulp
 npm install -g typescript
 ```
 
+```
+npm install -g less 
+```
+
 ### Local
 
 Run the following command to install all of the npm modules referenced in the package.json file.

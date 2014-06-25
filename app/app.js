@@ -133,6 +133,7 @@ angular.module('angularCrud').directive('crudShowEditableForm', [
 ///<reference path='editable-form.ts' />
 ///<reference path='show-editable-form.ts' />
 ///<reference path='../typings/angularjs/angular.d.ts' />
+///<reference path='i-metadata-service.ts' />
 ///<reference path='references.ts' />
 /**
 * Created by Bob on 5/4/2014.
@@ -168,16 +169,19 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
 * ????
 */
 var BaseController = (function () {
-    function BaseController(context) {
+    function BaseController($injector, context) {
         "use strict";
+        var _this = this;
+
         this.context = context;
 
-        //this.resourceName = params.resourceName;
-        //this.formTag = params.formTag;
-        //this.$routeParams = $routeParams;
-        //this.$location = $location;
-        //this.service = ResourceService;
-        //this.metadataService = MetadataService;
+        // Load required angular references
+        var ngRefs = _.union(['$location', '$routeParams'], this.context.ngRefs);
+        this.ng = {};
+        for (var i = 0, len = ngRefs.length; i < len; i++) {
+            _this.ng[ngRefs[i]] = $injector.get(ngRefs[i]);
+        }
+
         this.resetFocus = true;
         this.isModelLoaded = false;
         this.showEditable = false;
@@ -188,6 +192,13 @@ var BaseController = (function () {
         this.refreshMetadata({});
         this.init();
     }
+    BaseController.addNgRef = function (context, item) {
+        if (!context.ngRefs) {
+            context.ngRefs = [];
+        }
+        context.ngRefs.push(item);
+    };
+
     BaseController.prototype.init = function () {
         "use strict";
         this.getFormMetadata();
@@ -384,7 +395,7 @@ var BaseController = (function () {
             this.refreshMetadata(result.metadata);
         }
         var newPath = this.context.resourceName + "/" + result.id;
-        this.context.$location.path(newPath);
+        this.ng.$location.path(newPath);
     };
 
     BaseController.prototype.onUpdateItemError = function (result) {
@@ -451,10 +462,11 @@ var __extends = this.__extends || function (d, b) {
 //import BaseController = require('./base-controller');
 var BaseDetailController = (function (_super) {
     __extends(BaseDetailController, _super);
-    function BaseDetailController(context) {
+    function BaseDetailController($injector, context) {
         "use strict";
-        _super.call(this, context);
-        this.getItem(context.$routeParams.id);
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
+        this.getItem(this.ng.$routeParams.id);
     }
     BaseDetailController.prototype.doSubmit = function (isValid) {
         "use strict";
@@ -469,12 +481,14 @@ var BaseDetailController = (function (_super) {
 //import BaseController = require('./base-controller');
 var BaseEditController = (function (_super) {
     __extends(BaseEditController, _super);
-    function BaseEditController() {
-        _super.apply(this, arguments);
+    function BaseEditController($injector, context) {
+        "use strict";
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
     }
     BaseEditController.prototype.getData = function () {
         "use strict";
-        this.getItem(this.context.$routeParams.id);
+        this.getItem(this.ng.$routeParams.id);
     };
 
     BaseEditController.prototype.doSubmit = function (isValid) {
@@ -529,12 +543,14 @@ var BaseNewController = (function (_super) {
 //import BaseController = require('./base-controller');
 var BaseShowController = (function (_super) {
     __extends(BaseShowController, _super);
-    function BaseShowController() {
-        _super.apply(this, arguments);
+    function BaseShowController($injector, context) {
+        "use strict";
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
     }
     BaseShowController.prototype.getData = function () {
         "use strict";
-        this.getItem(this.context.$routeParams.id);
+        this.getItem(this.ng.$routeParams.id);
     };
 
     BaseShowController.prototype.doSubmit = function (isValid) {
@@ -560,6 +576,7 @@ var NavigationController = (function () {
 angular.module('angularCrud').controller('NavigationController', ['$location', function ($location) {
         return new NavigationController($location);
     }]);
+///<reference path='i-controller-context.ts' />
 ///<reference path='base-controller.ts' />
 ///<reference path='base-detail-controller.ts' />
 ///<reference path='base-edit-controller.ts' />
@@ -684,23 +701,21 @@ angular.module('app.workRequests', ['ngResource']);
 */
 var WorkRequestListController = (function (_super) {
     __extends(WorkRequestListController, _super);
-    function WorkRequestListController(context) {
+    function WorkRequestListController($injector, context) {
         "use strict";
-        _super.call(this, context);
+        _super.call(this, $injector, context);
         this.orderProp = 'id';
     }
     return WorkRequestListController;
 })(BaseListController);
 
 angular.module('app.workRequests').controller('WorkRequestListController', [
-    '$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-    function ($routeParams, $location, $scope, ResourceService, MetadataService) {
-        return new WorkRequestListController({
+    '$injector', 'ResourceService', 'MetadataService',
+    function ($injector, ResourceService, MetadataService) {
+        return new WorkRequestListController($injector, {
             resourceName: "work-requests",
             formTag: "list",
-            $routeParams: $routeParams,
-            $location: $location,
-            $scope: $scope,
+            ngRefs: [],
             resourceService: ResourceService,
             metadataService: MetadataService
         });
@@ -711,9 +726,9 @@ angular.module('app.workRequests').controller('WorkRequestListController', [
 */
 var WorkRequestNewController = (function (_super) {
     __extends(WorkRequestNewController, _super);
-    function WorkRequestNewController(context) {
+    function WorkRequestNewController($injector, context) {
         "use strict";
-        _super.call(this, context);
+        _super.call(this, $injector, context);
         this.viewModel.requestTypeId = "ADDATM";
         this.viewModel.stateId = "DRAFT";
         this.viewModel.expedited = false;
@@ -753,14 +768,12 @@ var WorkRequestNewController = (function (_super) {
 })(BaseNewController);
 
 angular.module('app.workRequests').controller('WorkRequestNewController', [
-    '$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-    function ($routeParams, $location, $scope, ResourceService, MetadataService) {
-        return new WorkRequestNewController({
+    '$injector', 'ResourceService', 'MetadataService',
+    function ($injector, ResourceService, MetadataService) {
+        return new WorkRequestNewController($injector, {
             resourceName: "work-requests",
             formTag: "detail",
-            $routeParams: $routeParams,
-            $location: $location,
-            $scope: $scope,
+            ngRefs: [],
             resourceService: ResourceService,
             metadataService: MetadataService
         });
@@ -799,14 +812,12 @@ var WorkRequestEditController = (function (_super) {
 })(BaseEditController);
 
 angular.module('app.workRequests').controller('WorkRequestEditController', [
-    '$routeParams', '$location', '$scope', 'ResourceService', 'MetadataService',
-    function ($routeParams, $location, $scope, ResourceService, MetadataService) {
-        return new WorkRequestEditController({
+    '$injector', 'ResourceService', 'MetadataService',
+    function ($injector, ResourceService, MetadataService) {
+        return new WorkRequestEditController($injector, {
             resourceName: "work-requests",
             formTag: "detail",
-            $routeParams: $routeParams,
-            $location: $location,
-            $scope: $scope,
+            ngRefs: [],
             resourceService: ResourceService,
             metadataService: MetadataService
         });
@@ -822,8 +833,11 @@ angular.module('app.workRequests').controller('WorkRequestEditController', [
 * Created by e1009811 on 5/1/2014.
 */
 var app = angular.module('crudApp', ['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests']).config([
-    "$routeProvider",
-    function ($routeProvider) {
+    "$routeProvider", "$locationProvider",
+    function ($routeProvider, $locationProvider) {
+        //commenting out this line (switching to hashbang mode) breaks the app
+        //-- unless # is added to the templates
+        //$locationProvider.html5Mode(true);
         $routeProvider.when('/todos/new', {
             templateUrl: 'app/todos/detail.html',
             controller: 'TodoNewController',

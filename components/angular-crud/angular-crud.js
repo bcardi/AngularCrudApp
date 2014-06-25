@@ -133,6 +133,7 @@ angular.module('angularCrud').directive('crudShowEditableForm', [
 ///<reference path='editable-form.ts' />
 ///<reference path='show-editable-form.ts' />
 ///<reference path='../typings/angularjs/angular.d.ts' />
+///<reference path='i-metadata-service.ts' />
 ///<reference path='references.ts' />
 /**
 * Created by Bob on 5/4/2014.
@@ -168,16 +169,19 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
 * ????
 */
 var BaseController = (function () {
-    function BaseController(context) {
+    function BaseController($injector, context) {
         "use strict";
+        var _this = this;
+
         this.context = context;
 
-        //this.resourceName = params.resourceName;
-        //this.formTag = params.formTag;
-        //this.$routeParams = $routeParams;
-        //this.$location = $location;
-        //this.service = ResourceService;
-        //this.metadataService = MetadataService;
+        // Load required angular references
+        var ngRefs = _.union(['$location', '$routeParams'], this.context.ngRefs);
+        this.ng = {};
+        for (var i = 0, len = ngRefs.length; i < len; i++) {
+            _this.ng[ngRefs[i]] = $injector.get(ngRefs[i]);
+        }
+
         this.resetFocus = true;
         this.isModelLoaded = false;
         this.showEditable = false;
@@ -188,6 +192,13 @@ var BaseController = (function () {
         this.refreshMetadata({});
         this.init();
     }
+    BaseController.addNgRef = function (context, item) {
+        if (!context.ngRefs) {
+            context.ngRefs = [];
+        }
+        context.ngRefs.push(item);
+    };
+
     BaseController.prototype.init = function () {
         "use strict";
         this.getFormMetadata();
@@ -384,7 +395,7 @@ var BaseController = (function () {
             this.refreshMetadata(result.metadata);
         }
         var newPath = this.context.resourceName + "/" + result.id;
-        this.context.$location.path(newPath);
+        this.ng.$location.path(newPath);
     };
 
     BaseController.prototype.onUpdateItemError = function (result) {
@@ -451,10 +462,11 @@ var __extends = this.__extends || function (d, b) {
 //import BaseController = require('./base-controller');
 var BaseDetailController = (function (_super) {
     __extends(BaseDetailController, _super);
-    function BaseDetailController(context) {
+    function BaseDetailController($injector, context) {
         "use strict";
-        _super.call(this, context);
-        this.getItem(context.$routeParams.id);
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
+        this.getItem(this.ng.$routeParams.id);
     }
     BaseDetailController.prototype.doSubmit = function (isValid) {
         "use strict";
@@ -469,12 +481,14 @@ var BaseDetailController = (function (_super) {
 //import BaseController = require('./base-controller');
 var BaseEditController = (function (_super) {
     __extends(BaseEditController, _super);
-    function BaseEditController() {
-        _super.apply(this, arguments);
+    function BaseEditController($injector, context) {
+        "use strict";
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
     }
     BaseEditController.prototype.getData = function () {
         "use strict";
-        this.getItem(this.context.$routeParams.id);
+        this.getItem(this.ng.$routeParams.id);
     };
 
     BaseEditController.prototype.doSubmit = function (isValid) {
@@ -529,12 +543,14 @@ var BaseNewController = (function (_super) {
 //import BaseController = require('./base-controller');
 var BaseShowController = (function (_super) {
     __extends(BaseShowController, _super);
-    function BaseShowController() {
-        _super.apply(this, arguments);
+    function BaseShowController($injector, context) {
+        "use strict";
+        BaseController.addNgRef(context, '$routeParams');
+        _super.call(this, $injector, context);
     }
     BaseShowController.prototype.getData = function () {
         "use strict";
-        this.getItem(this.context.$routeParams.id);
+        this.getItem(this.ng.$routeParams.id);
     };
 
     BaseShowController.prototype.doSubmit = function (isValid) {
@@ -560,6 +576,7 @@ var NavigationController = (function () {
 angular.module('angularCrud').controller('NavigationController', ['$location', function ($location) {
         return new NavigationController($location);
     }]);
+///<reference path='i-controller-context.ts' />
 ///<reference path='base-controller.ts' />
 ///<reference path='base-detail-controller.ts' />
 ///<reference path='base-edit-controller.ts' />

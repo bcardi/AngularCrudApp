@@ -8,10 +8,11 @@
 
 class BaseDetailController extends BaseController {
 
-    constructor(context) {
+    constructor($injector, context) {
         "use strict";
-        super(context);
-        this.getItem(context.$routeParams.id);
+        BaseController.addNgRef(context,'$routeParams');
+        super($injector, context);
+        this.getItem(this.ng.$routeParams.id);
     }
 
     doSubmit(isValid){
