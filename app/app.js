@@ -282,6 +282,7 @@ var BaseController = (function () {
     BaseController.prototype.getList = function () {
         var _this = this;
         "use strict";
+        this.viewModel = [];
         this.resetFocus = false;
         this.isModelLoaded = false;
         this.context.resourceService.getList({ resourceName: this.context.resourceName }).then(function (result) {
@@ -421,7 +422,9 @@ var BaseController = (function () {
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        this.getList();
+        var removed = _.remove(this.viewModel, function (item) {
+            return (item.id === result.id);
+        });
     };
 
     BaseController.prototype.onDeleteItemError = function (result) {
@@ -596,37 +599,65 @@ angular.module('angularCrud').controller('NavigationController', ['$location', f
 var ResourceService = (function () {
     function ResourceService($resource, $q) {
         "use strict";
-        this.name = "couchdb";
+        this.name = "elastic";
+        this.type = "nosql";
         this.$q = $q;
-        this.resource = $resource('', { protocol: 'http:', server: 'localhost:5984' }, {
+        this.resource = $resource('', { protocol: 'http:', server: 'localhost:9200', index: 'angularjs-crud' }, {
             create: {
-                url: ':protocol//:server/:resourceName/_design/api/_update/save/:docId',
+                url: ':protocol//:server/:index/:resourceName/:docId',
                 method: 'POST',
                 params: { docId: '@id' }
             },
             update: {
-                url: ':protocol//:server/:resourceName/_design/api/_update/save/:docId',
+                url: ':protocol//:server/:index/:resourceName/:docId',
                 method: 'PUT',
-                params: { docId: '@id' }
+                params: { docId: '@id' },
+                transformResponse: function (data) {
+                    var response = angular.fromJson(data);
+                    console.log(response);
+                }
             },
             delete: {
-                url: ':protocol//:server/:resourceName/:docId',
+                url: ':protocol//:server/:index/:resourceName/:docId',
                 method: 'DELETE',
-                params: { docId: '@id', rev: '@_rev' }
+                params: { docId: '@id' },
+                transformResponse: function (data) {
+                    var response = angular.fromJson(data);
+                    response.id = response._id;
+                    return response;
+                }
             },
             query: {
-                url: ':protocol//:server/:resourceName/_design/api/_list/all/default',
+                url: ':protocol//:server/:index/:resourceName/_search',
                 method: 'GET',
-                isArray: true
+                isArray: true,
+                transformResponse: function (data) {
+                    var response = angular.fromJson(data);
+                    var result = [];
+                    for (var i = 0, max = response.hits.total; i < max; i++) {
+                        var item = response.hits.hits[i];
+                        var source = item._source;
+                        source["id"] = item._id;
+                        result.push(source);
+                    }
+                    return result;
+                }
             },
             get: {
-                url: ':protocol//:server/:resourceName/_design/api/_show/detail/:docId',
+                url: ':protocol//:server/:index/:resourceName/:docId',
                 method: 'GET',
-                params: { docId: '@id' }
+                params: { docId: '@id' },
+                transformResponse: function (data) {
+                    var response = angular.fromJson(data);
+                    var result = response._source;
+                    result["id"] = response._id;
+                    console.log(result);
+                    return result;
+                }
             },
             counter: {
-                url: ':protocol//:server/counters/_design/api/_update/counter/:resourceName',
-                method: 'POST',
+                url: ':protocol//:server/:index/counters/:resourceName',
+                method: 'PUT',
                 params: { resourceName: '@resourceName' }
             }
         });
@@ -643,7 +674,7 @@ var ResourceService = (function () {
             return this.resource.create({ resourceName: params.resourceName }, item).$promise;
         } else {
             return this.resource.counter({}, { resourceName: params.resourceName }).$promise.then(function (data) {
-                item.id = '' + data.counter;
+                item.id = '' + data._version;
                 return _this.resource.create({ resourceName: params.resourceName }, item).$promise;
             });
         }
@@ -689,7 +720,7 @@ curl -X PUT http://127.0.0.1:5984/work-requests/_design/api --data-binary @mydes
 }
 */
 ///<reference path='../components/angular-crud/angular-crud.ts' />
-///<reference path='../components/angular-crud/services/resource-service-couchdb.ts' />
+///<reference path='../components/angular-crud/services/resource-service-elasticsearch.ts' />
 ///<reference path='../references.ts' />
 /**
 * Created by e1009811 on 5/1/2014.
@@ -743,7 +774,7 @@ var WorkRequestNewController = (function (_super) {
         "use strict";
 
         /***** Special processing for couchdb sample app *****/
-        if (this.context.resourceService.name == "couchdb") {
+        if (this.context.resourceService.type === "nosql") {
             item.metadata = {
                 "form": {
                     "tabs": {

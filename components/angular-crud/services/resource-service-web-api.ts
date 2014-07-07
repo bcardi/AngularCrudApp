@@ -12,6 +12,7 @@ class ResourceService {
     constructor($resource) {
         "use strict";
         this.name = "web-api";
+        this.type = "service"
         this.resource =
             $resource('http://localhost:59263/api/:resourceName/:id',
                 { id: '@id' },

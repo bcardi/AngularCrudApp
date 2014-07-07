@@ -21,7 +21,7 @@ class WorkRequestNewController extends BaseNewController {
     createItem(item) {
         "use strict";
         /***** Special processing for couchdb sample app *****/
-        if (this.context.resourceService.name == "couchdb") {
+        if (this.context.resourceService.type === "nosql") {
             item.metadata = {
                 "form": {
                     "tabs": {

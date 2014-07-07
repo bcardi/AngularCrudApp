@@ -56,12 +56,12 @@ class BaseController {
         this.init();
     }
 
-    init(){
+    public init(): void {
         "use strict";
         this.getFormMetadata();
     }
 
-    getFormMetadata(){
+    public getFormMetadata(): void {
         "use strict";
         this.context.metadataService
             .get({resourceName: this.context.resourceName, formTag: this.context.formTag})
@@ -69,7 +69,7 @@ class BaseController {
             .catch((result) => this.onGetFormMetadataError(result));
     }
 
-    onGetFormMetadataSuccess(result) {
+    public onGetFormMetadataSuccess(result): void {
         "use strict";
         console.log('onGetFormMetadataSuccess');
         this.metadataBase = {"form":{"tabs":{},"sections":{}}};
@@ -79,12 +79,12 @@ class BaseController {
         this.getData();
     }
 
-    isTrue(value, defaultValue){
+    public isTrue(value, defaultValue): void {
         "use strict";
         return (value == undefined) ? defaultValue : value;
     }
 
-    collapseAll(){
+    public collapseAll(): void {
         "use strict";
         var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function(sectionKey) {
@@ -93,7 +93,7 @@ class BaseController {
         });
     }
 
-    expandAll(){
+    public expandAll(): void {
         "use strict";
         var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function(sectionKey) {
@@ -102,13 +102,13 @@ class BaseController {
         });
     }
 
-    onGetFormMetadataError(result) {
+    public onGetFormMetadataError(result): void {
         "use strict";
         console.log('onGetFormMetadataError');
         this.getData();
     }
 
-    getData(){
+    public getData(): void {
         "use strict";
     }
 /*
@@ -133,8 +133,9 @@ class BaseController {
         this.messages = 'Error'
     }
 */
-    getList() {
+    public getList(): void {
         "use strict";
+        this.viewModel = [];
         this.resetFocus = false;
         this.isModelLoaded = false;
         this.context.resourceService
@@ -143,20 +144,20 @@ class BaseController {
             .catch((result) => this.onGetListError(result));
     }
 
-    onGetListSuccess(result) {
+    public onGetListSuccess(result): void {
         "use strict";
-        this.messages = 'Success'
+        this.messages = 'Success';
         this.viewModel = result;
         this.resetFocus = true;
         this.isModelLoaded = false;
     }
 
-    onGetListError(result) {
+    public onGetListError(result): void {
         "use strict";
         this.messages = 'Error'
     }
 
-    createItem(item) {
+    public createItem(item): void {
         "use strict";
         this.resetFocus = false;
         this.isModelLoaded = false;
@@ -168,7 +169,7 @@ class BaseController {
             .catch((item) => this.onCreateError(item));
     }
 
-    onCreateSuccess(result) {
+    public onCreateSuccess(result): void {
         "use strict";
         this.messages = 'Success'
         this.isModelLoaded = false;
@@ -180,13 +181,13 @@ class BaseController {
         }
     }
 
-    onCreateError(result) {
+    public onCreateError(result): void {
         "use strict";
         this.messages = 'Error'
         this.resetFocus = true;
     }
 
-    getItem(id) {
+    public getItem(id): void {
         "use strict";
         this.resetFocus = false;
         this.isModelLoaded = false;
@@ -198,7 +199,7 @@ class BaseController {
             .catch((result) => this.onGetItemError(result));
     }
 
-    onGetItemSuccess(result) {
+    public onGetItemSuccess(result): void {
         "use strict";
         this.viewModel = result;
         this.resetFocus = true;
@@ -210,7 +211,7 @@ class BaseController {
         }
     }
 
-    refreshMetadata(metadata){
+    public refreshMetadata(metadata): void{
         "use strict";
         if (metadata != undefined) {
             this.metadata = {};
@@ -218,12 +219,12 @@ class BaseController {
         }
     }
 
-    onGetItemError(result) {
+    public onGetItemError(result): void {
         "use strict";
         this.messages = 'Error'
     }
 
-    updateItem(item) {
+    public updateItem(item): void {
         "use strict";
         this.isModelLoaded = false;
         this.context.resourceService
@@ -232,7 +233,7 @@ class BaseController {
             .catch((result) => this.onUpdateItemError(result));
     }
 
-    onUpdateItemSuccess(result) {
+    public onUpdateItemSuccess(result): void {
         "use strict";
         this.messages = 'Success';
         this.isModelLoaded = false;
@@ -243,12 +244,12 @@ class BaseController {
         this.ng.$location.path(newPath);
     }
 
-    onUpdateItemError(result) {
+    public onUpdateItemError(result): void {
         "use strict";
         this.messages = 'Error'
     }
 
-    deleteItem(item) {
+    public deleteItem(item): void {
         "use strict";
         this.isModelLoaded = false;
         this.context.resourceService
@@ -257,26 +258,28 @@ class BaseController {
             .catch((result) => this.onDeleteItemError(result));
     }
 
-    onDeleteItemSuccess(result) {
+    public onDeleteItemSuccess(result): void {
         "use strict";
         this.messages = 'Success'
         this.isModelLoaded = false;
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        this.getList();
+        var removed = _.remove(this.viewModel, function(item){
+            return (item.id === result.id);
+        });
     }
 
-    onDeleteItemError(result) {
+    public onDeleteItemError(result): void {
         "use strict";
         this.messages = 'Error'
     }
 
-    doSubmit(isValid){
+    public doSubmit(isValid: any): void {
         "use strict";
     }
 
-    validateForm(thisForm){
+    public validateForm(thisForm): string{
         "use strict";
         var haveError = false;
         if (thisForm && thisForm.$error && thisForm.$error.required) {

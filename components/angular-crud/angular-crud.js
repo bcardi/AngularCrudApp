@@ -282,6 +282,7 @@ var BaseController = (function () {
     BaseController.prototype.getList = function () {
         var _this = this;
         "use strict";
+        this.viewModel = [];
         this.resetFocus = false;
         this.isModelLoaded = false;
         this.context.resourceService.getList({ resourceName: this.context.resourceName }).then(function (result) {
@@ -421,7 +422,9 @@ var BaseController = (function () {
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        this.getList();
+        var removed = _.remove(this.viewModel, function (item) {
+            return (item.id === result.id);
+        });
     };
 
     BaseController.prototype.onDeleteItemError = function (result) {
