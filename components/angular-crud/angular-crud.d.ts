@@ -53,6 +53,7 @@ declare class BaseController {
     public metadataBase: any;
     public metadata: any;
     public messages: string;
+    public primaryGridOptions: any;
     static addNgRef(context: any, item: any): void;
     constructor($injector: any, context: IControllerContext);
     public init(): void;

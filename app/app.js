@@ -172,6 +172,7 @@ var BaseController = (function () {
     function BaseController($injector, context) {
         this.searchModel = {};
         this.metadataBase = {};
+        this.primaryGridOptions = {};
         "use strict";
         var _this = this;
 
@@ -306,6 +307,7 @@ var BaseController = (function () {
         this.viewModel = result;
         this.resetFocus = true;
         this.isModelLoaded = false;
+        this.primaryGridOptions = { data: '[{"a":"1", "b":2}]' };
     };
 
     BaseController.prototype.onGetListError = function (result) {

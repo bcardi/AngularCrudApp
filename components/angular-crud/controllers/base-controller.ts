@@ -25,6 +25,7 @@ class BaseController {
     public metadataBase: any = {};
     public metadata: any;
     public messages: string;
+    public primaryGridOptions: any = {};
 
     static addNgRef(context, item){
         if (!context.ngRefs){
@@ -156,6 +157,7 @@ class BaseController {
         this.viewModel = result;
         this.resetFocus = true;
         this.isModelLoaded = false;
+        this.primaryGridOptions = { data: '[{"a":"1", "b":2}]' };
     }
 
     public onGetListError(result): void {

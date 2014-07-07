@@ -2,3 +2,7 @@
     cursor: pointer;
     cursor: hand;
 }
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+}

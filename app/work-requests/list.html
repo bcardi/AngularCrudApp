@@ -8,11 +8,11 @@
             </accordion-heading>
             <form class="form-inline" novalidate>
                 <div class="form-group">
-                    <label for="institution" control-label">Institution</label>
+                    <label for="institution" class="control-label">Institution</label>
                     <input crud-autofocus="dc.resetFocus" type="text" name="institution" ng-model="dc.searchModel.institution">
                 </div>
                 <div class="form-group">
-                    <label for="deviceId" control-label">Device</label>
+                    <label for="deviceId" class="control-label">Device</label>
                     <input crud-autofocus="dc.resetFocus" type="text" name="deviceId" ng-model="dc.searchModel.deviceId">
                 </div>
                 <button class="btn btn-default" ng-click="dc.getList()">Search</button>
@@ -63,3 +63,6 @@
         -->
     </tr>
 </table>
+
+<div class="gridStyle" ng-grid="dc.primaryGridOptions">
+</div>
