@@ -49,12 +49,14 @@ declare class BaseController {
     public showEditable: boolean;
     public isReadonly: boolean;
     public viewModel: any;
+    public searchModel: any;
     public metadataBase: any;
     public metadata: any;
     public messages: string;
     static addNgRef(context: any, item: any): void;
     constructor($injector: any, context: IControllerContext);
     public init(): void;
+    public loadData(): void;
     public getFormMetadata(): void;
     public onGetFormMetadataSuccess(result: any): void;
     public isTrue(value: any, defaultValue: any): void;
@@ -68,6 +70,7 @@ declare class BaseController {
     public createItem(item: any): void;
     public onCreateSuccess(result: any): void;
     public onCreateError(result: any): void;
+    public showItem(item: any): void;
     public getItem(id: any): void;
     public onGetItemSuccess(result: any): void;
     public refreshMetadata(metadata: any): void;

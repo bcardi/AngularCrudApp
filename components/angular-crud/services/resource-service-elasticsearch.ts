@@ -85,7 +85,20 @@ class ResourceService {
 
     getList(params) {
         "use strict";
-        return this.resource.query({resourceName: params.resourceName}).$promise;
+        var q = "";
+        if (params.searchModel){
+            for (var prop in params.searchModel) {
+                if (params.searchModel[prop]) {
+                    q += "+" + prop + ":" + params.searchModel[prop] + " ";
+                }
+            }
+        }
+        console.log("q="+q);
+        var queryParams = {resourceName: params.resourceName};
+        if (q) {
+            queryParams["q"] = q;
+        }
+        return this.resource.query(queryParams).$promise;
     }
 
     createItem(params, item) {

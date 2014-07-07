@@ -5,19 +5,43 @@
 
 class WorkRequestEditController extends BaseEditController {
 
-    onGetItemSuccess(result) {
+    public init(): void {
+        this.metadataBase = {
+            "form": {
+                "tabs": {
+                    "request": {
+                        "isDisabled": false
+                    },
+                    "location": {
+                        "isDisabled": true
+                    }
+                },
+                "sections": {
+                    "address": {
+                        "isOpen": true
+                    },
+                    "description": {
+                        "isOpen": true
+                    }
+                }
+            }
+        }
+        super.init();
+    }
+
+    public onGetItemSuccess(result): void {
         "use strict";
         super.onGetItemSuccess(result);
         this.showEditable = !this.viewModel.isReadonly;
         this.isReadonly = this.viewModel.isReadonly;
     }
 
-    validateForm(thisForm) {
+    public validateForm(thisForm): string {
         "use strict";
         return super.validateForm(thisForm);
     }
 
-    updateItem(item) {
+    public updateItem(item): void {
         "use strict";
         /***** Special processing for couchdb sample app *****/
         item.metadata.form.tabs.functionality.isDisabled = false;

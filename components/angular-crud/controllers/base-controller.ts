@@ -21,7 +21,8 @@ class BaseController {
     public showEditable: boolean;
     public isReadonly: boolean;
     public viewModel: any;
-    public metadataBase: any;
+    public searchModel: any = {};
+    public metadataBase: any = {};
     public metadata: any;
     public messages: string;
 
@@ -52,11 +53,16 @@ class BaseController {
         this.viewModel = {};
         this.metadataBase = {"form":{"tabs":{},"sections":{}}};
         this.metadata = {};
-        this.refreshMetadata({});
         this.init();
+        this.refreshMetadata({});
+        this.loadData();
     }
 
     public init(): void {
+        "use strict";
+    }
+
+    public loadData(): void {
         "use strict";
         this.getFormMetadata();
     }
@@ -72,7 +78,7 @@ class BaseController {
     public onGetFormMetadataSuccess(result): void {
         "use strict";
         console.log('onGetFormMetadataSuccess');
-        this.metadataBase = {"form":{"tabs":{},"sections":{}}};
+        //this.metadataBase = {"form":{"tabs":{},"sections":{}}};
         _.merge(this.metadataBase, result);
         this.metadata = {};
         this.refreshMetadata({});
@@ -139,7 +145,7 @@ class BaseController {
         this.resetFocus = false;
         this.isModelLoaded = false;
         this.context.resourceService
-            .getList({resourceName: this.context.resourceName})
+            .getList({resourceName: this.context.resourceName, searchModel: this.searchModel})
             .then((result) => this.onGetListSuccess(result))
             .catch((result) => this.onGetListError(result));
     }
@@ -185,6 +191,12 @@ class BaseController {
         "use strict";
         this.messages = 'Error'
         this.resetFocus = true;
+    }
+
+    public showItem(item): void {
+        //<a href="#/work-requests/{{item.id}}">
+        var newPath = this.context.resourceName + "/" + item.id;
+        this.ng.$location.path(newPath);
     }
 
     public getItem(id): void {
@@ -240,8 +252,7 @@ class BaseController {
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        var newPath = this.context.resourceName + "/" + result.id;
-        this.ng.$location.path(newPath);
+        this.showItem(result);
     }
 
     public onUpdateItemError(result): void {
@@ -279,7 +290,7 @@ class BaseController {
         "use strict";
     }
 
-    public validateForm(thisForm): string{
+    public validateForm(thisForm): string {
         "use strict";
         var haveError = false;
         if (thisForm && thisForm.$error && thisForm.$error.required) {

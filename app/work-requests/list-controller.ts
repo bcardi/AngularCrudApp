@@ -4,14 +4,6 @@
  */
 
 class WorkRequestListController extends BaseListController {
-
-    public orderProp: string;
-
-    constructor($injector, context) {
-        "use strict";
-        super($injector, context);
-        this.orderProp = 'id';
-    }
 }
 
 angular.module('app.workRequests')

@@ -1,3 +1,9 @@
 {
-    "form":{}
+    "form":{
+        "sections": {
+            "search": {
+                "isOpen": true
+            }
+        }
+    }
 }

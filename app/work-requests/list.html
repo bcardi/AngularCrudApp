@@ -1,17 +1,32 @@
 <div>
-    <!--Sidebar content-->
-    Search: <input crud-autofocus="dc.resetFocus" ng-model="query">
-    Sort by:
-    <select ng-model="dc.orderProp">
-        <option value="title">Title</option>
-        <option value="id">Id</option>
-    </select>
-    <button class="btn btn-default" ng-click="dc.getList()">Refresh</button>
-    <a class="btn btn-default" href="#/work-requests/new">New</a>
-    <p />
+    <accordion close-others=false>
+        <accordion-group is-open="dc.metadata.form.sections.search.isOpen"
+                         is-disabled="false">
+            <accordion-heading>
+                Search<i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': dc.metadata.form.sections.search.isOpen, 'glyphicon-chevron-right': !dc.metadata.form.sections.search.isOpen}"></i>
+            </accordion-heading>
+            <form class="form-inline" novalidate>
+                <div class="form-group">
+                    <label for="institution" control-label">Institution</label>
+                    <input crud-autofocus="dc.resetFocus" type="text" name="institution" ng-model="dc.searchModel.institution">
+                </div>
+                <div class="form-group">
+                    <label for="deviceId" control-label">Device</label>
+                    <input crud-autofocus="dc.resetFocus" type="text" name="deviceId" ng-model="dc.searchModel.deviceId">
+                </div>
+                <button class="btn btn-default" ng-click="dc.getList()">Search</button>
+                <a class="btn btn-default" href="#/work-requests/new">New</a>
+            </form>
+        </accordion-group>
+    </accordion>
 </div>
+<section>
+<p>Use the Find field to locate items within the search results set.</p>
+<input ng-model="query">
+</section>
 <!--Body content-->
-<table class="table table-striped">
+<table class="table table-striped table-hover">
     <thead>
     <tr>
         <th>Req#</th>
@@ -25,11 +40,11 @@
         <th>Tab Status</th>
         <th>Created<br/>Modified</th>
         <th>Created By<br/>Modified By</th>
-        <th>Actions</th>
+        <!--<th>Actions</th>-->
     </tr>
     </thead>
-    <tr ng-repeat="item in dc.viewModel | filter:query | orderBy:reqNumber">
-        <td><a href="#/work-requests/{{item.id}}">{{item.id}}</a></td>
+    <tr ng-repeat="item in dc.viewModel | filter:query | orderBy:reqNumber" ng-click="dc.showItem(item)">
+        <td>{{item.id}}</td>
         <td>{{item.custRequestNo}}</td>
         <td>{{item.requestTypeId}}</td>
         <td>{{item.stateId}}</td>
@@ -40,9 +55,11 @@
         <td>{{item.tabStatus}}</td>
         <td>{{item.createdAt | date:'shortDate'}}<br/>{{item.updatedAt | date:'shortDate'}}</td>
         <td>{{item.createdBy}}<br/>{{item.updatedBy}}</td>
+        <!--
         <td>
             <a href="#/work-requests/{{item.id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
             <a href="" ng-click="dc.deleteItem(item)"><span class="glyphicon glyphicon-remove"></span></a>
         </td>
+        -->
     </tr>
 </table>

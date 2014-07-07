@@ -170,6 +170,8 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
 */
 var BaseController = (function () {
     function BaseController($injector, context) {
+        this.searchModel = {};
+        this.metadataBase = {};
         "use strict";
         var _this = this;
 
@@ -189,8 +191,9 @@ var BaseController = (function () {
         this.viewModel = {};
         this.metadataBase = { "form": { "tabs": {}, "sections": {} } };
         this.metadata = {};
-        this.refreshMetadata({});
         this.init();
+        this.refreshMetadata({});
+        this.loadData();
     }
     BaseController.addNgRef = function (context, item) {
         if (!context.ngRefs) {
@@ -200,6 +203,10 @@ var BaseController = (function () {
     };
 
     BaseController.prototype.init = function () {
+        "use strict";
+    };
+
+    BaseController.prototype.loadData = function () {
         "use strict";
         this.getFormMetadata();
     };
@@ -217,7 +224,8 @@ var BaseController = (function () {
     BaseController.prototype.onGetFormMetadataSuccess = function (result) {
         "use strict";
         console.log('onGetFormMetadataSuccess');
-        this.metadataBase = { "form": { "tabs": {}, "sections": {} } };
+
+        //this.metadataBase = {"form":{"tabs":{},"sections":{}}};
         _.merge(this.metadataBase, result);
         this.metadata = {};
         this.refreshMetadata({});
@@ -285,7 +293,7 @@ var BaseController = (function () {
         this.viewModel = [];
         this.resetFocus = false;
         this.isModelLoaded = false;
-        this.context.resourceService.getList({ resourceName: this.context.resourceName }).then(function (result) {
+        this.context.resourceService.getList({ resourceName: this.context.resourceName, searchModel: this.searchModel }).then(function (result) {
             return _this.onGetListSuccess(result);
         }).catch(function (result) {
             return _this.onGetListError(result);
@@ -336,6 +344,12 @@ var BaseController = (function () {
         "use strict";
         this.messages = 'Error';
         this.resetFocus = true;
+    };
+
+    BaseController.prototype.showItem = function (item) {
+        //<a href="#/work-requests/{{item.id}}">
+        var newPath = this.context.resourceName + "/" + item.id;
+        this.ng.$location.path(newPath);
     };
 
     BaseController.prototype.getItem = function (id) {
@@ -395,8 +409,7 @@ var BaseController = (function () {
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        var newPath = this.context.resourceName + "/" + result.id;
-        this.ng.$location.path(newPath);
+        this.showItem(result);
     };
 
     BaseController.prototype.onUpdateItemError = function (result) {
@@ -664,7 +677,20 @@ var ResourceService = (function () {
     }
     ResourceService.prototype.getList = function (params) {
         "use strict";
-        return this.resource.query({ resourceName: params.resourceName }).$promise;
+        var q = "";
+        if (params.searchModel) {
+            for (var prop in params.searchModel) {
+                if (params.searchModel[prop]) {
+                    q += "+" + prop + ":" + params.searchModel[prop] + " ";
+                }
+            }
+        }
+        console.log("q=" + q);
+        var queryParams = { resourceName: params.resourceName };
+        if (q) {
+            queryParams["q"] = q;
+        }
+        return this.resource.query(queryParams).$promise;
     };
 
     ResourceService.prototype.createItem = function (params, item) {
@@ -732,10 +758,8 @@ angular.module('app.workRequests', ['ngResource']);
 */
 var WorkRequestListController = (function (_super) {
     __extends(WorkRequestListController, _super);
-    function WorkRequestListController($injector, context) {
-        "use strict";
-        _super.call(this, $injector, context);
-        this.orderProp = 'id';
+    function WorkRequestListController() {
+        _super.apply(this, arguments);
     }
     return WorkRequestListController;
 })(BaseListController);
@@ -818,6 +842,30 @@ var WorkRequestEditController = (function (_super) {
     function WorkRequestEditController() {
         _super.apply(this, arguments);
     }
+    WorkRequestEditController.prototype.init = function () {
+        this.metadataBase = {
+            "form": {
+                "tabs": {
+                    "request": {
+                        "isDisabled": false
+                    },
+                    "location": {
+                        "isDisabled": true
+                    }
+                },
+                "sections": {
+                    "address": {
+                        "isOpen": true
+                    },
+                    "description": {
+                        "isOpen": true
+                    }
+                }
+            }
+        };
+        _super.prototype.init.call(this);
+    };
+
     WorkRequestEditController.prototype.onGetItemSuccess = function (result) {
         "use strict";
         _super.prototype.onGetItemSuccess.call(this, result);
