@@ -134,6 +134,7 @@ angular.module('angularCrud').directive('crudShowEditableForm', [
 ///<reference path='show-editable-form.ts' />
 ///<reference path='../typings/angularjs/angular.d.ts' />
 ///<reference path='i-metadata-service.ts' />
+///<reference path='i-resource-service.ts' />
 ///<reference path='references.ts' />
 /**
 * Created by Bob on 5/4/2014.
@@ -170,32 +171,36 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
 */
 var BaseController = (function () {
     function BaseController($injector, context) {
+        var _this = this;
+        this.resetFocus = true;
+        this.isModelLoaded = false;
+        this.showEditable = false;
+        this.isReadonly = true;
+        this.viewModel = {};
         this.searchModel = {};
-        this.metadataBase = {};
+        this.metadataBase = { "form": { "tabs": {}, "sections": {} } };
+        this.metadata = {};
+        this.messages = "";
         this.primaryGridOptions = {};
         "use strict";
-        var _this = this;
 
         this.context = context;
 
         // Load required angular references
         var ngRefs = _.union(['$location', '$routeParams'], this.context.ngRefs);
         this.ng = {};
-        for (var i = 0, len = ngRefs.length; i < len; i++) {
-            _this.ng[ngRefs[i]] = $injector.get(ngRefs[i]);
-        }
+        _.forEach(ngRefs, function (item) {
+            return _this.ng[item] = $injector.get(item);
+        });
 
-        this.resetFocus = true;
-        this.isModelLoaded = false;
-        this.showEditable = false;
-        this.isReadonly = true;
-        this.viewModel = {};
-        this.metadataBase = { "form": { "tabs": {}, "sections": {} } };
-        this.metadata = {};
         this.init();
         this.refreshMetadata({});
         this.loadData();
     }
+    BaseController.prototype.clearSearchModel = function () {
+        this.searchModel = {};
+    };
+
     BaseController.addNgRef = function (context, item) {
         if (!context.ngRefs) {
             context.ngRefs = [];
@@ -224,9 +229,6 @@ var BaseController = (function () {
 
     BaseController.prototype.onGetFormMetadataSuccess = function (result) {
         "use strict";
-        console.log('onGetFormMetadataSuccess');
-
-        //this.metadataBase = {"form":{"tabs":{},"sections":{}}};
         _.merge(this.metadataBase, result);
         this.metadata = {};
         this.refreshMetadata({});
@@ -235,7 +237,7 @@ var BaseController = (function () {
 
     BaseController.prototype.isTrue = function (value, defaultValue) {
         "use strict";
-        return (value == undefined) ? defaultValue : value;
+        return (value === undefined) ? defaultValue : value;
     };
 
     BaseController.prototype.collapseAll = function () {

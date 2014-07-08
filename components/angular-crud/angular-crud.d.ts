@@ -9,7 +9,20 @@ declare var filters: ng.IModule;
 */
 interface IMetadataService {
     resource: any;
-    get: (params: any) => any;
+    get(params: any): ng.IPromise<any>;
+}
+/**
+* Created by Bob on 7/8/2014.
+*/
+interface IResourceService {
+    name: string;
+    type: string;
+    resource: any;
+    getList(params: any): ng.IPromise<any>;
+    createItem(params: any, item: any): ng.IPromise<any>;
+    getItem(params: any): ng.IPromise<any>;
+    updateItem(params: any, item: any): ng.IPromise<any>;
+    deleteItem(params: any, item: any): ng.IPromise<any>;
 }
 /**
 * Created by Bob on 5/4/2014.
@@ -17,7 +30,7 @@ interface IMetadataService {
 declare class MetadataService implements IMetadataService {
     public resource: any;
     constructor($resource: any);
-    public get(params: any): any;
+    public get(params: any): ng.IPromise<any>;
 }
 /**
 * Created by Bob on 6/17/2014.
@@ -54,6 +67,7 @@ declare class BaseController {
     public metadata: any;
     public messages: string;
     public primaryGridOptions: any;
+    public clearSearchModel(): void;
     static addNgRef(context: any, item: any): void;
     constructor($injector: any, context: IControllerContext);
     public init(): void;
