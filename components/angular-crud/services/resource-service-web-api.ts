@@ -4,9 +4,10 @@
  * Created by Bob on 5/4/2014.
  */
 
-class ResourceService {
+class ResourceService implements IResourceService {
 
     public name:string;
+    public type: string;
     public resource: any;
 
     constructor($resource) {
@@ -22,27 +23,27 @@ class ResourceService {
             );
     }
 
-    getList(params) {
+    public getList(params):ng.IPromise<any> {
         "use strict";
         return this.resource.query({resourceName: params.resourceName}).$promise;
     }
 
-    createItem(params, item) {
+    public createItem(params, item):ng.IPromise<any> {
         "use strict";
         return this.resource.create({resourceName: params.resourceName}, item).$promise;
     }
 
-    getItem(params) {
+    public getItem(params):ng.IPromise<any> {
         "use strict";
         return this.resource.get({resourceName: params.resourceName}, { id: params.id }).$promise;
     }
 
-    updateItem(params, item) {
+    public updateItem(params, item):ng.IPromise<any> {
         "use strict";
         return this.resource.update({resourceName: params.resourceName}, item).$promise;
     }
 
-    deleteItem(params, item) {
+    public deleteItem(params, item):ng.IPromise<any> {
         "use strict";
         return this.resource.delete({resourceName: params.resourceName}, item).$promise;
     }

@@ -4,17 +4,16 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-class ResourceService {
+class ResourceService implements IResourceService {
 
     public name: string;
-    public $q: any;
+    public type: string;
     public resource: any;
 
-    constructor($resource, $q) {
+    constructor($resource) {
         "use strict";
         this.name = "couchdb";
         this.type = "nosql"
-        this.$q = $q;
         this.resource =
             //http://127.0.0.1:5984/work-requests/_design/api/_list/all/default
             $resource(
@@ -55,12 +54,12 @@ class ResourceService {
             );
     }
 
-    getList(params) {
+    public getList(params):ng.IPromise<any> {
         "use strict";
         return this.resource.query({resourceName: params.resourceName}).$promise;
     }
 
-    createItem(params, item) {
+    public createItem(params, item):ng.IPromise<any> {
         "use strict";
         var _this = this;
         if (item.id){
@@ -75,23 +74,23 @@ class ResourceService {
         }
     }
 
-    getItem(params) {
+    public getItem(params):ng.IPromise<any> {
         "use strict";
         return this.resource.get({resourceName: params.resourceName}, { id: params.id }).$promise;
     }
 
-    updateItem(params, item) {
+    public updateItem(params, item):ng.IPromise<any> {
         "use strict";
         return this.resource.update({resourceName: params.resourceName}, item).$promise;
     }
 
-    deleteItem(params, item) {
+    public deleteItem(params, item):ng.IPromise<any> {
         "use strict";
         return this.resource.delete({resourceName: params.resourceName}, item).$promise;
     }
 }
 
-angular.module('angularCrud').factory('ResourceService', ['$resource','$q', ($resource,$q) => new ResourceService($resource, $q)]);
+angular.module('angularCrud').factory('ResourceService', ['$resource', ($resource) => new ResourceService($resource)]);
 
 /*
  Create "_design/api" document in database

@@ -4,18 +4,16 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-class ResourceService {
+class ResourceService implements IResourceService {
 
     public name: string;
     public type: string;
-    public $q: any;
     public resource: any;
 
-    constructor($resource, $q) {
+    constructor($resource) {
         "use strict";
         this.name = "elastic";
-        this.type = "nosql"
-        this.$q = $q;
+        this.type = "nosql";
         this.resource =
             //http://127.0.0.1:5984/work-requests/_design/api/_list/all/default
             $resource(
@@ -83,7 +81,7 @@ class ResourceService {
             );
     }
 
-    getList(params) {
+    public getList(params:any):ng.IPromise<any> {
         "use strict";
         var q = "";
         if (params.searchModel){
@@ -93,7 +91,7 @@ class ResourceService {
                 }
             }
         }
-        console.log("q="+q);
+        //console.log("q="+q);
         var queryParams = {resourceName: params.resourceName};
         if (q) {
             queryParams["q"] = q;
@@ -101,7 +99,7 @@ class ResourceService {
         return this.resource.query(queryParams).$promise;
     }
 
-    createItem(params, item) {
+    public createItem(params:any, item:any):ng.IPromise<any> {
         "use strict";
         var _this = this;
         if (item.id){
@@ -116,23 +114,23 @@ class ResourceService {
         }
     }
 
-    getItem(params) {
+    public getItem(params:any):ng.IPromise<any> {
         "use strict";
         return this.resource.get({resourceName: params.resourceName}, { id: params.id }).$promise;
     }
 
-    updateItem(params, item) {
+    public updateItem(params:any, item:any):ng.IPromise<any> {
         "use strict";
         return this.resource.update({resourceName: params.resourceName}, item).$promise;
     }
 
-    deleteItem(params, item) {
+    public deleteItem(params:any, item:any):ng.IPromise<any> {
         "use strict";
         return this.resource.delete({resourceName: params.resourceName}, item).$promise;
     }
 }
 
-angular.module('angularCrud').factory('ResourceService', ['$resource','$q', ($resource,$q) => new ResourceService($resource, $q)]);
+angular.module('angularCrud').factory('ResourceService', ['$resource', ($resource) => new ResourceService($resource)]);
 
 /*
  Create "_design/api" document in database
