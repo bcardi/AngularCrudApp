@@ -26,6 +26,20 @@ npm install -g typescript
 npm install -g less 
 ```
 
+```
+npm install -g karma 
+```
+
+If karma install fails, you may need to run it as follows; replace the version as necessary.
+
+```
+npm install -g karma -msvs_version=2013
+```
+
+```
+npm install -g karma-cli
+```
+
 ### Local
 
 Run the following command to install all of the npm modules referenced in the package.json file.

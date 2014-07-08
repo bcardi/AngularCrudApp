@@ -16,7 +16,9 @@
     "gulp-util": "^2.2.14",
     "dgeni": "^0.3.0",
     "canonical-path": "0.0.2",
-    "dgeni-packages": "^0.9.2"
+    "dgeni-packages": "^0.9.2",
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
