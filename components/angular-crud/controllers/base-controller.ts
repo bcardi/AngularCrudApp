@@ -16,16 +16,20 @@ class BaseController {
     public ng: any;
 
     public context: IControllerContext;
-    public resetFocus: boolean;
-    public isModelLoaded: boolean;
-    public showEditable: boolean;
-    public isReadonly: boolean;
-    public viewModel: any;
+    public resetFocus: boolean = true;
+    public isModelLoaded: boolean = false;
+    public showEditable: boolean = false;
+    public isReadonly: boolean = true;
+    public viewModel: any = {};
     public searchModel: any = {};
-    public metadataBase: any = {};
-    public metadata: any;
-    public messages: string;
+    public metadataBase: any = {"form":{"tabs":{},"sections":{}}};
+    public metadata: any = {};
+    public messages: string = "";
     public primaryGridOptions: any = {};
+
+    public clearSearchModel():void {
+        this.searchModel = {};
+    }
 
     static addNgRef(context, item){
         if (!context.ngRefs){
@@ -36,24 +40,14 @@ class BaseController {
 
     constructor($injector, context: IControllerContext) {
         "use strict";
-        var _this = this;
 
         this.context = context;
 
         // Load required angular references
         var ngRefs = _.union(['$location', '$routeParams'], this.context.ngRefs);
         this.ng = {};
-        for (var i=0,len=ngRefs.length;i<len;i++){
-            _this.ng[ngRefs[i]] = $injector.get(ngRefs[i]);
-        }
+        _.forEach(ngRefs, item => this.ng[item] = $injector.get(item))
 
-        this.resetFocus = true;
-        this.isModelLoaded = false;
-        this.showEditable = false;
-        this.isReadonly = true;
-        this.viewModel = {};
-        this.metadataBase = {"form":{"tabs":{},"sections":{}}};
-        this.metadata = {};
         this.init();
         this.refreshMetadata({});
         this.loadData();
@@ -72,14 +66,12 @@ class BaseController {
         "use strict";
         this.context.metadataService
             .get({resourceName: this.context.resourceName, formTag: this.context.formTag})
-            .then((result) => this.onGetFormMetadataSuccess(result))
-            .catch((result) => this.onGetFormMetadataError(result));
+            .then(result => this.onGetFormMetadataSuccess(result))
+            .catch(result => this.onGetFormMetadataError(result));
     }
 
     public onGetFormMetadataSuccess(result): void {
         "use strict";
-        console.log('onGetFormMetadataSuccess');
-        //this.metadataBase = {"form":{"tabs":{},"sections":{}}};
         _.merge(this.metadataBase, result);
         this.metadata = {};
         this.refreshMetadata({});
@@ -88,7 +80,7 @@ class BaseController {
 
     public isTrue(value, defaultValue): void {
         "use strict";
-        return (value == undefined) ? defaultValue : value;
+        return (value === undefined) ? defaultValue : value;
     }
 
     public collapseAll(): void {

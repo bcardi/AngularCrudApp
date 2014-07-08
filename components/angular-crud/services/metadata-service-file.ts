@@ -13,7 +13,7 @@ class MetadataService implements IMetadataService {
         this.resource = $resource('app/:resourceName/:formTag-metadata.json',{ },{ } );
     }
 
-    get(params) {
+    public get(params):ng.IPromise<any> {
         "use strict";
         return this.resource.get({resourceName: params.resourceName, formTag: params.formTag}).$promise;
     }

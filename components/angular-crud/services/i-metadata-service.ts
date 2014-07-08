@@ -3,5 +3,5 @@
  */
 interface IMetadataService{
     resource: any;
-    get:(params: any) => any;
+    get(params: any): ng.IPromise<any>;
 }
