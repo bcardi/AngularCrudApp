@@ -18,6 +18,12 @@ interface IResourceService {
     name: string;
     type: string;
     resource: any;
+    items: any[];
+    currentItem: any;
+    currentItemIndex: number;
+    searchModel: any;
+    getListTime: any;
+    metadata: any[];
     getList(params: any): ng.IPromise<any>;
     createItem(params: any, item: any): ng.IPromise<any>;
     getItem(params: any): ng.IPromise<any>;
@@ -86,6 +92,8 @@ declare class BaseController {
     public onCreateSuccess(result: any): void;
     public onCreateError(result: any): void;
     public showItem(item: any): void;
+    public showPreviousItem(): void;
+    public showNextItem(): void;
     public getItem(id: any): void;
     public onGetItemSuccess(result: any): void;
     public refreshMetadata(metadata: any): void;

@@ -9,6 +9,12 @@ class ResourceService implements IResourceService {
     public name: string;
     public type: string;
     public resource: any;
+    public items: any[];
+    public currentItem: any;
+    public currentItemIndex: number;
+    public searchModel: any;
+    public getListTime: any;
+    public metadata: any[] = [];
 
     constructor($resource) {
         "use strict";
@@ -49,7 +55,9 @@ class ResourceService implements IResourceService {
                         method: 'GET',
                         isArray: true,
                         transformResponse: function(data){
+                            console.log(data);
                             var response = angular.fromJson(data);
+                            console.log(response);
                             var result = [];
                             for(var i=0,max=response.hits.total;i<max;i++){
                                 var item = response.hits.hits[i];
@@ -58,6 +66,14 @@ class ResourceService implements IResourceService {
                                 result.push(source);
                             }
                             return result;
+                        },
+                        interceptor: {
+                            response: (httpResponse) => {
+                                return this.onGetListSuccess(httpResponse);
+                            },
+                            responseError: function(httpResponse) {
+                                return this.onGetListError(httpResponse);
+                            }
                         }
                     },
                     get: {
@@ -81,6 +97,15 @@ class ResourceService implements IResourceService {
             );
     }
 
+    public onGetListSuccess(httpResponse:any):any {
+        this.items = httpResponse.data;
+        return this.items;
+    }
+
+    public onGetListError(httpResponse:any):void {
+        return httpResponse.data;
+    }
+
     public getList(params:any):ng.IPromise<any> {
         "use strict";
         var q = "";
@@ -101,15 +126,15 @@ class ResourceService implements IResourceService {
 
     public createItem(params:any, item:any):ng.IPromise<any> {
         "use strict";
-        var _this = this;
+        //var _this = this;
         if (item.id){
             return this.resource.create({resourceName: params.resourceName}, item).$promise;
         } else {
             return this.resource
                 .counter({}, {resourceName: params.resourceName}).$promise
-                .then(function (data) {
+                .then( (data) => {
                     item.id = '' + data._version;
-                    return _this.resource.create({resourceName: params.resourceName}, item).$promise;
+                    return this.resource.create({resourceName: params.resourceName}, item).$promise;
                 });
         }
     }

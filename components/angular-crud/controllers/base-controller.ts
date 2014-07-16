@@ -49,7 +49,7 @@ class BaseController {
         _.forEach(ngRefs, item => this.ng[item] = $injector.get(item))
 
         this.init();
-        this.refreshMetadata({});
+        //this.refreshMetadata({});
         this.loadData();
     }
 
@@ -64,10 +64,17 @@ class BaseController {
 
     public getFormMetadata(): void {
         "use strict";
-        this.context.metadataService
-            .get({resourceName: this.context.resourceName, formTag: this.context.formTag})
-            .then(result => this.onGetFormMetadataSuccess(result))
-            .catch(result => this.onGetFormMetadataError(result));
+
+        var cachedMetadata = {};
+        try {cachedMetadata = this.context.resourceService.metadata[this.context.formTag]} catch(e) {}
+        if (_.isEmpty(cachedMetadata)){
+            this.context.metadataService
+                .get({resourceName: this.context.resourceName, formTag: this.context.formTag})
+                .then(result => this.onGetFormMetadataSuccess(result))
+                .catch(result => this.onGetFormMetadataError(result));
+        } else {
+            this.onGetFormMetadataSuccess(cachedMetadata);
+        }
     }
 
     public onGetFormMetadataSuccess(result): void {
@@ -85,18 +92,18 @@ class BaseController {
 
     public collapseAll(): void {
         "use strict";
-        var _this = this;
-        Object.keys(this.metadata.form.sections).forEach(function(sectionKey) {
-            var section = _this.metadata.form.sections[sectionKey];
+        //var _this = this;
+        Object.keys(this.metadata.form.sections).forEach( (sectionKey) => {
+            var section = this.metadata.form.sections[sectionKey];
             section.isOpen = false;
         });
     }
 
     public expandAll(): void {
         "use strict";
-        var _this = this;
-        Object.keys(this.metadata.form.sections).forEach(function(sectionKey) {
-            var section = _this.metadata.form.sections[sectionKey];
+        //var _this = this;
+        Object.keys(this.metadata.form.sections).forEach( (sectionKey) => {
+            var section = this.metadata.form.sections[sectionKey];
             section.isOpen = true;
         });
     }
@@ -143,16 +150,20 @@ class BaseController {
             .catch((result) => this.onGetListError(result));
     }
 
-    public onGetListSuccess(result): void {
+    public onGetListSuccess(result:any): void {
         "use strict";
         this.messages = 'Success';
-        this.viewModel = result;
+        this.context.resourceService.items = result;
+        this.context.resourceService.searchModel = _.cloneDeep(this.searchModel);
+        this.context.resourceService.getListTime = Date.now();
+        this.viewModel = this.context.resourceService.items;
         this.resetFocus = true;
         this.isModelLoaded = false;
+        try {this.metadata.form.sections.search.isOpen = false} catch(e) {}
         this.primaryGridOptions = { data: '[{"a":"1", "b":2}]' };
     }
 
-    public onGetListError(result): void {
+    public onGetListError(result:any): void {
         "use strict";
         this.messages = 'Error'
     }
@@ -191,6 +202,37 @@ class BaseController {
         //<a href="#/work-requests/{{item.id}}">
         var newPath = this.context.resourceName + "/" + item.id;
         this.ng.$location.path(newPath);
+        try {
+            this.context.resourceService.currentItem = null;
+            var index = _.indexOf(this.context.resourceService.items, item);
+            this.context.resourceService.currentItemIndex = index;
+        } catch(e) {
+            //
+        }
+    }
+
+    public showPreviousItem() {
+        try {
+            if (this.context.resourceService.currentItemIndex > 0) {
+                this.context.resourceService.currentItemIndex--;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch(e) {
+
+        }
+    }
+
+    public showNextItem() {
+        try {
+            if (this.context.resourceService.currentItemIndex < this.context.resourceService.items.length-1) {
+                this.context.resourceService.currentItemIndex++;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch(e) {
+
+        }
     }
 
     public getItem(id): void {
@@ -207,7 +249,12 @@ class BaseController {
 
     public onGetItemSuccess(result): void {
         "use strict";
-        this.viewModel = result;
+        try {
+            this.context.resourceService.currentItem = result;
+            this.viewModel = this.context.resourceService.currentItem;
+        } catch(e) {
+            this.viewModel = result;
+        }
         this.resetFocus = true;
         this.isModelLoaded = true;
         this.showEditable = true;
@@ -223,6 +270,7 @@ class BaseController {
             this.metadata = {};
             _.merge(this.metadata, this.metadataBase, metadata);
         }
+        try {this.context.resourceService.metadata[this.context.formTag] = this.metadata} catch(e) {};
     }
 
     public onGetItemError(result): void {
@@ -270,7 +318,7 @@ class BaseController {
         if (result.metadata != undefined) {
             this.refreshMetadata(result.metadata);
         }
-        var removed = _.remove(this.viewModel, function(item){
+        var removed = _.remove(this.viewModel, (item) => {
             return (item.id === result.id);
         });
     }

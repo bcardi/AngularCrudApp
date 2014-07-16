@@ -9,7 +9,13 @@
         <div class="col-sm-1">{{dc.viewModel.id}}</div>
         <label class="col-sm-1 control-label">State</label>
         <div class="col-sm-1">{{dc.viewModel.stateId}}</div>
-        <div class="col-sm-4"><a href="#/work-requests" class="pull-right">Show List</a></div>
+        <div class="col-sm-4">
+            <div class="pull-right">
+                <a href="#/work-requests">Show List</a>
+                <button class="btn btn-link" ng-click="dc.showPreviousItem()">Previous</button>
+                <button class="btn btn-link" ng-click="dc.showNextItem()">Next</button>
+            </div>
+        </div>
     </div>
 
     <div class="row">

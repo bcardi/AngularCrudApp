@@ -10,6 +10,11 @@ class BaseListController extends BaseController {
 
     getData(){
         "use strict";
-        this.getList();
+        if (this.context.resourceService.getListTime) {
+            this.searchModel = this.context.resourceService.searchModel;
+            this.viewModel = this.context.resourceService.items;
+            try {this.metadata.form.sections.search.isOpen = false;} catch(e) {}
+            //this.getList();
+        }
     }
 }

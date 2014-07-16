@@ -51,7 +51,7 @@ class WorkRequestEditController extends BaseEditController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestEditController', ['$injector', 'ResourceService', 'MetadataService',
+    .controller('WorkRequestEditController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
         ($injector, ResourceService, MetadataService) => new WorkRequestEditController(
             $injector,
             {

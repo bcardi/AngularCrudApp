@@ -6,6 +6,12 @@ interface IResourceService{
     name: string;
     type: string;
     resource: any;
+    items: any[];
+    currentItem: any;
+    currentItemIndex: number;
+    searchModel: any;
+    getListTime: any;
+    metadata: any[];
 
     getList(params:any):ng.IPromise<any>;
     createItem(params:any, item:any):ng.IPromise<any>;

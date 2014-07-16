@@ -129,9 +129,39 @@ angular.module('angularCrud').directive('crudShowEditableForm', [
             }
         };
     }]);
+/**
+* Created by Bob on 7/14/2014.
+*/
+angular.module('angularCrud').directive('crudSearchValues', [function () {
+        "use strict";
+        return {
+            restrict: 'E',
+            template: '{{searchText}}',
+            scope: { searchModel: '=' },
+            link: function (scope, element, attrs) {
+                scope.$watch('searchModel', function (searchModel) {
+                    if (searchModel) {
+                        scope.searchText = "";
+                        var delim = "(";
+                        for (var prop in searchModel) {
+                            if (searchModel[prop]) {
+                                var label = $("label[for='" + prop + "']").text() || prop;
+                                scope.searchText += delim + label + ":" + searchModel[prop];
+                                delim = ", ";
+                            }
+                        }
+                        if (scope.searchText) {
+                            scope.searchText += ")";
+                        }
+                    }
+                }, true);
+            }
+        };
+    }]);
 ///<reference path='autofocus.ts' />
 ///<reference path='editable-form.ts' />
 ///<reference path='show-editable-form.ts' />
+///<reference path='search-values.ts' />
 ///<reference path='../typings/angularjs/angular.d.ts' />
 ///<reference path='i-metadata-service.ts' />
 ///<reference path='i-resource-service.ts' />
@@ -194,7 +224,8 @@ var BaseController = (function () {
         });
 
         this.init();
-        this.refreshMetadata({});
+
+        //this.refreshMetadata({});
         this.loadData();
     }
     BaseController.prototype.clearSearchModel = function () {
@@ -220,11 +251,21 @@ var BaseController = (function () {
     BaseController.prototype.getFormMetadata = function () {
         var _this = this;
         "use strict";
-        this.context.metadataService.get({ resourceName: this.context.resourceName, formTag: this.context.formTag }).then(function (result) {
-            return _this.onGetFormMetadataSuccess(result);
-        }).catch(function (result) {
-            return _this.onGetFormMetadataError(result);
-        });
+
+        var cachedMetadata = {};
+        try  {
+            cachedMetadata = this.context.resourceService.metadata[this.context.formTag];
+        } catch (e) {
+        }
+        if (_.isEmpty(cachedMetadata)) {
+            this.context.metadataService.get({ resourceName: this.context.resourceName, formTag: this.context.formTag }).then(function (result) {
+                return _this.onGetFormMetadataSuccess(result);
+            }).catch(function (result) {
+                return _this.onGetFormMetadataError(result);
+            });
+        } else {
+            this.onGetFormMetadataSuccess(cachedMetadata);
+        }
     };
 
     BaseController.prototype.onGetFormMetadataSuccess = function (result) {
@@ -241,8 +282,10 @@ var BaseController = (function () {
     };
 
     BaseController.prototype.collapseAll = function () {
-        "use strict";
         var _this = this;
+        "use strict";
+
+        //var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function (sectionKey) {
             var section = _this.metadata.form.sections[sectionKey];
             section.isOpen = false;
@@ -250,8 +293,10 @@ var BaseController = (function () {
     };
 
     BaseController.prototype.expandAll = function () {
-        "use strict";
         var _this = this;
+        "use strict";
+
+        //var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function (sectionKey) {
             var section = _this.metadata.form.sections[sectionKey];
             section.isOpen = true;
@@ -306,9 +351,16 @@ var BaseController = (function () {
     BaseController.prototype.onGetListSuccess = function (result) {
         "use strict";
         this.messages = 'Success';
-        this.viewModel = result;
+        this.context.resourceService.items = result;
+        this.context.resourceService.searchModel = _.cloneDeep(this.searchModel);
+        this.context.resourceService.getListTime = Date.now();
+        this.viewModel = this.context.resourceService.items;
         this.resetFocus = true;
         this.isModelLoaded = false;
+        try  {
+            this.metadata.form.sections.search.isOpen = false;
+        } catch (e) {
+        }
         this.primaryGridOptions = { data: '[{"a":"1", "b":2}]' };
     };
 
@@ -354,6 +406,35 @@ var BaseController = (function () {
         //<a href="#/work-requests/{{item.id}}">
         var newPath = this.context.resourceName + "/" + item.id;
         this.ng.$location.path(newPath);
+        try  {
+            this.context.resourceService.currentItem = null;
+            var index = _.indexOf(this.context.resourceService.items, item);
+            this.context.resourceService.currentItemIndex = index;
+        } catch (e) {
+            //
+        }
+    };
+
+    BaseController.prototype.showPreviousItem = function () {
+        try  {
+            if (this.context.resourceService.currentItemIndex > 0) {
+                this.context.resourceService.currentItemIndex--;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch (e) {
+        }
+    };
+
+    BaseController.prototype.showNextItem = function () {
+        try  {
+            if (this.context.resourceService.currentItemIndex < this.context.resourceService.items.length - 1) {
+                this.context.resourceService.currentItemIndex++;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch (e) {
+        }
     };
 
     BaseController.prototype.getItem = function (id) {
@@ -372,7 +453,12 @@ var BaseController = (function () {
 
     BaseController.prototype.onGetItemSuccess = function (result) {
         "use strict";
-        this.viewModel = result;
+        try  {
+            this.context.resourceService.currentItem = result;
+            this.viewModel = this.context.resourceService.currentItem;
+        } catch (e) {
+            this.viewModel = result;
+        }
         this.resetFocus = true;
         this.isModelLoaded = true;
         this.showEditable = true;
@@ -388,6 +474,11 @@ var BaseController = (function () {
             this.metadata = {};
             _.merge(this.metadata, this.metadataBase, metadata);
         }
+        try  {
+            this.context.resourceService.metadata[this.context.formTag] = this.metadata;
+        } catch (e) {
+        }
+        ;
     };
 
     BaseController.prototype.onGetItemError = function (result) {
@@ -529,7 +620,15 @@ var BaseListController = (function (_super) {
     }
     BaseListController.prototype.getData = function () {
         "use strict";
-        this.getList();
+        if (this.context.resourceService.getListTime) {
+            this.searchModel = this.context.resourceService.searchModel;
+            this.viewModel = this.context.resourceService.items;
+            try  {
+                this.metadata.form.sections.search.isOpen = false;
+            } catch (e) {
+            }
+            //this.getList();
+        }
     };
     return BaseListController;
 })(BaseController);

@@ -129,9 +129,39 @@ angular.module('angularCrud').directive('crudShowEditableForm', [
             }
         };
     }]);
+/**
+* Created by Bob on 7/14/2014.
+*/
+angular.module('angularCrud').directive('crudSearchValues', [function () {
+        "use strict";
+        return {
+            restrict: 'E',
+            template: '{{searchText}}',
+            scope: { searchModel: '=' },
+            link: function (scope, element, attrs) {
+                scope.$watch('searchModel', function (searchModel) {
+                    if (searchModel) {
+                        scope.searchText = "";
+                        var delim = "(";
+                        for (var prop in searchModel) {
+                            if (searchModel[prop]) {
+                                var label = $("label[for='" + prop + "']").text() || prop;
+                                scope.searchText += delim + label + ":" + searchModel[prop];
+                                delim = ", ";
+                            }
+                        }
+                        if (scope.searchText) {
+                            scope.searchText += ")";
+                        }
+                    }
+                }, true);
+            }
+        };
+    }]);
 ///<reference path='autofocus.ts' />
 ///<reference path='editable-form.ts' />
 ///<reference path='show-editable-form.ts' />
+///<reference path='search-values.ts' />
 ///<reference path='../typings/angularjs/angular.d.ts' />
 ///<reference path='i-metadata-service.ts' />
 ///<reference path='i-resource-service.ts' />
@@ -194,7 +224,8 @@ var BaseController = (function () {
         });
 
         this.init();
-        this.refreshMetadata({});
+
+        //this.refreshMetadata({});
         this.loadData();
     }
     BaseController.prototype.clearSearchModel = function () {
@@ -220,11 +251,21 @@ var BaseController = (function () {
     BaseController.prototype.getFormMetadata = function () {
         var _this = this;
         "use strict";
-        this.context.metadataService.get({ resourceName: this.context.resourceName, formTag: this.context.formTag }).then(function (result) {
-            return _this.onGetFormMetadataSuccess(result);
-        }).catch(function (result) {
-            return _this.onGetFormMetadataError(result);
-        });
+
+        var cachedMetadata = {};
+        try  {
+            cachedMetadata = this.context.resourceService.metadata[this.context.formTag];
+        } catch (e) {
+        }
+        if (_.isEmpty(cachedMetadata)) {
+            this.context.metadataService.get({ resourceName: this.context.resourceName, formTag: this.context.formTag }).then(function (result) {
+                return _this.onGetFormMetadataSuccess(result);
+            }).catch(function (result) {
+                return _this.onGetFormMetadataError(result);
+            });
+        } else {
+            this.onGetFormMetadataSuccess(cachedMetadata);
+        }
     };
 
     BaseController.prototype.onGetFormMetadataSuccess = function (result) {
@@ -241,8 +282,10 @@ var BaseController = (function () {
     };
 
     BaseController.prototype.collapseAll = function () {
-        "use strict";
         var _this = this;
+        "use strict";
+
+        //var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function (sectionKey) {
             var section = _this.metadata.form.sections[sectionKey];
             section.isOpen = false;
@@ -250,8 +293,10 @@ var BaseController = (function () {
     };
 
     BaseController.prototype.expandAll = function () {
-        "use strict";
         var _this = this;
+        "use strict";
+
+        //var _this = this;
         Object.keys(this.metadata.form.sections).forEach(function (sectionKey) {
             var section = _this.metadata.form.sections[sectionKey];
             section.isOpen = true;
@@ -306,9 +351,16 @@ var BaseController = (function () {
     BaseController.prototype.onGetListSuccess = function (result) {
         "use strict";
         this.messages = 'Success';
-        this.viewModel = result;
+        this.context.resourceService.items = result;
+        this.context.resourceService.searchModel = _.cloneDeep(this.searchModel);
+        this.context.resourceService.getListTime = Date.now();
+        this.viewModel = this.context.resourceService.items;
         this.resetFocus = true;
         this.isModelLoaded = false;
+        try  {
+            this.metadata.form.sections.search.isOpen = false;
+        } catch (e) {
+        }
         this.primaryGridOptions = { data: '[{"a":"1", "b":2}]' };
     };
 
@@ -354,6 +406,35 @@ var BaseController = (function () {
         //<a href="#/work-requests/{{item.id}}">
         var newPath = this.context.resourceName + "/" + item.id;
         this.ng.$location.path(newPath);
+        try  {
+            this.context.resourceService.currentItem = null;
+            var index = _.indexOf(this.context.resourceService.items, item);
+            this.context.resourceService.currentItemIndex = index;
+        } catch (e) {
+            //
+        }
+    };
+
+    BaseController.prototype.showPreviousItem = function () {
+        try  {
+            if (this.context.resourceService.currentItemIndex > 0) {
+                this.context.resourceService.currentItemIndex--;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch (e) {
+        }
+    };
+
+    BaseController.prototype.showNextItem = function () {
+        try  {
+            if (this.context.resourceService.currentItemIndex < this.context.resourceService.items.length - 1) {
+                this.context.resourceService.currentItemIndex++;
+                var newItem = this.context.resourceService.items[this.context.resourceService.currentItemIndex];
+                this.getItem(newItem.id);
+            }
+        } catch (e) {
+        }
     };
 
     BaseController.prototype.getItem = function (id) {
@@ -372,7 +453,12 @@ var BaseController = (function () {
 
     BaseController.prototype.onGetItemSuccess = function (result) {
         "use strict";
-        this.viewModel = result;
+        try  {
+            this.context.resourceService.currentItem = result;
+            this.viewModel = this.context.resourceService.currentItem;
+        } catch (e) {
+            this.viewModel = result;
+        }
         this.resetFocus = true;
         this.isModelLoaded = true;
         this.showEditable = true;
@@ -388,6 +474,11 @@ var BaseController = (function () {
             this.metadata = {};
             _.merge(this.metadata, this.metadataBase, metadata);
         }
+        try  {
+            this.context.resourceService.metadata[this.context.formTag] = this.metadata;
+        } catch (e) {
+        }
+        ;
     };
 
     BaseController.prototype.onGetItemError = function (result) {
@@ -529,7 +620,15 @@ var BaseListController = (function (_super) {
     }
     BaseListController.prototype.getData = function () {
         "use strict";
-        this.getList();
+        if (this.context.resourceService.getListTime) {
+            this.searchModel = this.context.resourceService.searchModel;
+            this.viewModel = this.context.resourceService.items;
+            try  {
+                this.metadata.form.sections.search.isOpen = false;
+            } catch (e) {
+            }
+            //this.getList();
+        }
     };
     return BaseListController;
 })(BaseController);
@@ -615,6 +714,8 @@ angular.module('angularCrud').controller('NavigationController', ['$location', f
 */
 var ResourceService = (function () {
     function ResourceService($resource) {
+        var _this = this;
+        this.metadata = [];
         "use strict";
         this.name = "elastic";
         this.type = "nosql";
@@ -648,7 +749,9 @@ var ResourceService = (function () {
                 method: 'GET',
                 isArray: true,
                 transformResponse: function (data) {
+                    console.log(data);
                     var response = angular.fromJson(data);
+                    console.log(response);
                     var result = [];
                     for (var i = 0, max = response.hits.total; i < max; i++) {
                         var item = response.hits.hits[i];
@@ -657,6 +760,14 @@ var ResourceService = (function () {
                         result.push(source);
                     }
                     return result;
+                },
+                interceptor: {
+                    response: function (httpResponse) {
+                        return _this.onGetListSuccess(httpResponse);
+                    },
+                    responseError: function (httpResponse) {
+                        return this.onGetListError(httpResponse);
+                    }
                 }
             },
             get: {
@@ -678,6 +789,15 @@ var ResourceService = (function () {
             }
         });
     }
+    ResourceService.prototype.onGetListSuccess = function (httpResponse) {
+        this.items = httpResponse.data;
+        return this.items;
+    };
+
+    ResourceService.prototype.onGetListError = function (httpResponse) {
+        return httpResponse.data;
+    };
+
     ResourceService.prototype.getList = function (params) {
         "use strict";
         var q = "";
@@ -698,8 +818,10 @@ var ResourceService = (function () {
     };
 
     ResourceService.prototype.createItem = function (params, item) {
-        "use strict";
         var _this = this;
+        "use strict";
+
+        //var _this = this;
         if (item.id) {
             return this.resource.create({ resourceName: params.resourceName }, item).$promise;
         } else {
@@ -756,6 +878,20 @@ curl -X PUT http://127.0.0.1:5984/work-requests/_design/api --data-binary @mydes
 * Created by e1009811 on 5/1/2014.
 */
 angular.module('app.workRequests', ['ngResource']);
+/**
+* Created by Bob on 7/15/2014.
+*/
+var WorkRequestResourceService = (function (_super) {
+    __extends(WorkRequestResourceService, _super);
+    function WorkRequestResourceService() {
+        _super.apply(this, arguments);
+    }
+    return WorkRequestResourceService;
+})(ResourceService);
+
+angular.module('app.workRequests').factory('WorkRequestResourceService', ['$resource', function ($resource) {
+        return new WorkRequestResourceService($resource);
+    }]);
 ///<reference path='../references.ts' />
 /**
 * Created by e1009811 on 5/1/2014.
@@ -769,7 +905,7 @@ var WorkRequestListController = (function (_super) {
 })(BaseListController);
 
 angular.module('app.workRequests').controller('WorkRequestListController', [
-    '$injector', 'ResourceService', 'MetadataService',
+    '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
         return new WorkRequestListController($injector, {
             resourceName: "work-requests",
@@ -895,7 +1031,7 @@ var WorkRequestEditController = (function (_super) {
 })(BaseEditController);
 
 angular.module('app.workRequests').controller('WorkRequestEditController', [
-    '$injector', 'ResourceService', 'MetadataService',
+    '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
         return new WorkRequestEditController($injector, {
             resourceName: "work-requests",
@@ -906,6 +1042,7 @@ angular.module('app.workRequests').controller('WorkRequestEditController', [
         });
     }]);
 ///<reference path='module.ts' />
+///<reference path='resource-service.ts' />
 ///<reference path='list-controller.ts' />
 ///<reference path='new-controller.ts' />
 ///<reference path='edit-controller.ts' />

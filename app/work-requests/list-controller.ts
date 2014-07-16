@@ -7,7 +7,7 @@ class WorkRequestListController extends BaseListController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestListController', ['$injector', 'ResourceService', 'MetadataService',
+    .controller('WorkRequestListController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
         ($injector, ResourceService, MetadataService) => new WorkRequestListController(
             $injector,
             {

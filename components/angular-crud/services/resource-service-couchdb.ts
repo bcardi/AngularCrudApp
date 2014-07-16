@@ -9,6 +9,11 @@ class ResourceService implements IResourceService {
     public name: string;
     public type: string;
     public resource: any;
+    public items: any[];
+    public currentItemIndex: number;
+    public searchModel: any;
+    public getListTime: any;
+    public metadata: any[] = [];
 
     constructor($resource) {
         "use strict";
@@ -61,15 +66,15 @@ class ResourceService implements IResourceService {
 
     public createItem(params, item):ng.IPromise<any> {
         "use strict";
-        var _this = this;
+        //var _this = this;
         if (item.id){
             return this.resource.create({resourceName: params.resourceName}, item).$promise;
         } else {
             return this.resource
                 .counter({}, {resourceName: params.resourceName}).$promise
-                .then(function (data) {
+                .then( (data) => {
                     item.id = '' + data.counter;
-                    return _this.resource.create({resourceName: params.resourceName}, item).$promise;
+                    return this.resource.create({resourceName: params.resourceName}, item).$promise;
                 });
         }
     }
