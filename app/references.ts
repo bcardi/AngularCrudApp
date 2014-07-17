@@ -1,2 +1,2 @@
-///<reference path='../components/angular-crud/angular-crud.ts' />
-///<reference path='../components/angular-crud/services/resource-service-elasticsearch.ts' />
+///<reference path='../components/angular-crud/angular-crud.d.ts' />
+///<reference path='../components/angular-crud-elasticsearch/resource-service.d.ts' />

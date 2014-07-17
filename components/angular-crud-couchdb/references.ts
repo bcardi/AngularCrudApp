@@ -1,0 +1,1 @@
+///<reference path='../angular-crud/angular-crud.d.ts' />
