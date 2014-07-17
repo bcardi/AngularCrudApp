@@ -1,13 +1,11 @@
 .table-hover tbody tr:hover > td {
-    cursor: pointer;
-    cursor: hand;
+  cursor: pointer;
+  cursor: hand;
 }
-
 .gridStyle {
-    border: 1px solid rgb(212,212,212);
+  border: 1px solid #d4d4d4;
 }
-
 crud-search-values {
-    font-size: smaller;
-    font-style: italic;
+  font-size: smaller;
+  font-style: italic;
 }

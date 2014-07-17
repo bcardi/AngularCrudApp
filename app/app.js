@@ -1,5 +1,5 @@
 ///<reference path='../components/angular-crud/angular-crud.d.ts' />
-///<reference path='../components/angular-crud-elasticsearch/resource-service.d.ts' />
+///<reference path='../components/angular-crud/resource-service.d.ts' />
 ///<reference path='../references.ts' />
 /**
 * Created by e1009811 on 5/1/2014.
