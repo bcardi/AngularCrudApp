@@ -10,6 +10,7 @@ class ResourceService implements IResourceService {
     public type: string;
     public resource: any;
     public items: any[];
+    public currentItem: any;
     public currentItemIndex: number;
     public searchModel: any;
     public getListTime: any;

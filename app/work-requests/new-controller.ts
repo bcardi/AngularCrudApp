@@ -44,7 +44,7 @@ class WorkRequestNewController extends BaseNewController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestNewController', ['$injector', 'ResourceService', 'MetadataService',
+    .controller('WorkRequestNewController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
         ($injector, ResourceService, MetadataService) => new WorkRequestNewController(
             $injector,
             {

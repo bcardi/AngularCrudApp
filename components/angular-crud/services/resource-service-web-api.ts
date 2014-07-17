@@ -9,6 +9,12 @@ class ResourceService implements IResourceService {
     public name:string;
     public type: string;
     public resource: any;
+    public items: any[];
+    public currentItem: any;
+    public currentItemIndex: number;
+    public searchModel: any;
+    public getListTime: any;
+    public metadata: any[] = [];
 
     constructor($resource) {
         "use strict";

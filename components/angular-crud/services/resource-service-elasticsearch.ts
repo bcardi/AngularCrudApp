@@ -21,7 +21,6 @@ class ResourceService implements IResourceService {
         this.name = "elastic";
         this.type = "nosql";
         this.resource =
-            //http://127.0.0.1:5984/work-requests/_design/api/_list/all/default
             $resource(
                 '',
                 { protocol: 'http:', server: 'localhost:9200', index: 'angularjs-crud' },

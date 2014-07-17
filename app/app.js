@@ -963,7 +963,7 @@ var WorkRequestNewController = (function (_super) {
 })(BaseNewController);
 
 angular.module('app.workRequests').controller('WorkRequestNewController', [
-    '$injector', 'ResourceService', 'MetadataService',
+    '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
         return new WorkRequestNewController($injector, {
             resourceName: "work-requests",
