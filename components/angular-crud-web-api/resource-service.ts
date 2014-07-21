@@ -31,7 +31,9 @@ class ResourceService implements IResourceService {
 
     public getList(params):ng.IPromise<any> {
         "use strict";
-        return this.resource.query({resourceName: params.resourceName}).$promise;
+        var queryParams = { resourceName: params.resourceName }
+        _.merge(queryParams, params.searchModel);
+        return this.resource.query(queryParams).$promise;
     }
 
     public createItem(params, item):ng.IPromise<any> {
