@@ -3,7 +3,7 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-class WorkRequestEditController extends BaseEditController {
+class WorkRequestsEditController extends BaseEditController {
 
     public init(): void {
         this.metadataBase = {
@@ -51,8 +51,8 @@ class WorkRequestEditController extends BaseEditController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestEditController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
-        ($injector, ResourceService, MetadataService) => new WorkRequestEditController(
+    .controller('WorkRequestsEditController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestsEditController(
             $injector,
             {
                 resourceName: "work-requests",

@@ -3,12 +3,12 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-class WorkRequestListController extends BaseListController {
+class WorkRequestsListController extends BaseListController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestListController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
-        ($injector, ResourceService, MetadataService) => new WorkRequestListController(
+    .controller('WorkRequestsListController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestsListController(
             $injector,
             {
                 resourceName: "work-requests",

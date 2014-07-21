@@ -1,4 +1,5 @@
-///<reference path='typings/angularjs/angular.d.ts' />
+///<reference path='../angularjs/angular.d.ts' />
+///<reference path='../lodash/lodash.d.ts' />
 ///<reference path='references.ts' />
 /**
 * Created by Bob on 5/23/2014.
@@ -25,8 +26,7 @@ filters.filter('booleanAsYesNo', function () {
     };
 });
 ///<reference path='filters.ts' />
-///<reference path='../typings/angularjs/angular.d.ts' />
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/5/2014.
 */
@@ -59,7 +59,7 @@ angular.module('angularCrud').directive('crudAutofocus', [
             }
         };
     }]);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/15/2014.
 */
@@ -108,7 +108,7 @@ angular.module('angularCrud').directive('crudEditableForm', function () {
         }
     };
 });
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/5/2014.
 */
@@ -162,10 +162,7 @@ angular.module('angularCrud').directive('crudSearchValues', [function () {
 ///<reference path='editable-form.ts' />
 ///<reference path='show-editable-form.ts' />
 ///<reference path='search-values.ts' />
-///<reference path='../typings/angularjs/angular.d.ts' />
-///<reference path='i-metadata-service.ts' />
-///<reference path='i-resource-service.ts' />
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/4/2014.
 */
@@ -185,8 +182,9 @@ angular.module('angularCrud').factory('MetadataService', ['$resource', function 
         return new MetadataService($resource);
     }]);
 ///<reference path='metadata-service-file.ts' />
-///<reference path='../typings/lodash/lodash.d.ts' />
-///<reference path='references.ts' />
+///<reference path='i-metadata-service.ts' />
+///<reference path='i-resource-service.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/5/2014.
 */
@@ -560,7 +558,7 @@ var BaseController = (function () {
     };
     return BaseController;
 })();
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -585,7 +583,7 @@ var BaseDetailController = (function (_super) {
     };
     return BaseDetailController;
 })(BaseController);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/6/2014.
 */
@@ -608,7 +606,7 @@ var BaseEditController = (function (_super) {
     };
     return BaseEditController;
 })(BaseController);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/6/2014.
 */
@@ -632,7 +630,7 @@ var BaseListController = (function (_super) {
     };
     return BaseListController;
 })(BaseController);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/6/2014.
 */
@@ -655,7 +653,7 @@ var BaseNewController = (function (_super) {
     };
     return BaseNewController;
 })(BaseController);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/6/2014.
 */
@@ -678,7 +676,7 @@ var BaseShowController = (function (_super) {
     };
     return BaseShowController;
 })(BaseController);
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 /**
 * Created by Bob on 5/13/2014.
 */

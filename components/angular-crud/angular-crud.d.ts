@@ -1,9 +1,17 @@
-/// <reference path="typings/angularjs/angular.d.ts" />
-/// <reference path="typings/lodash/lodash.d.ts" />
+/// <reference path="../angularjs/angular.d.ts" />
+/// <reference path="../lodash/lodash.d.ts" />
 /**
 * Created by Bob on 5/17/2014.
 */
 declare var filters: ng.IModule;
+/**
+* Created by Bob on 5/4/2014.
+*/
+declare class MetadataService implements IMetadataService {
+    public resource: any;
+    constructor($resource: any);
+    public get(params: any): ng.IPromise<any>;
+}
 /**
 * Created by Bob on 6/17/2014.
 */
@@ -29,14 +37,6 @@ interface IResourceService {
     getItem(params: any): ng.IPromise<any>;
     updateItem(params: any, item: any): ng.IPromise<any>;
     deleteItem(params: any, item: any): ng.IPromise<any>;
-}
-/**
-* Created by Bob on 5/4/2014.
-*/
-declare class MetadataService implements IMetadataService {
-    public resource: any;
-    constructor($resource: any);
-    public get(params: any): ng.IPromise<any>;
 }
 /**
 * Created by Bob on 6/17/2014.

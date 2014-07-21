@@ -3,7 +3,7 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-class WorkRequestNewController extends BaseNewController {
+class WorkRequestsNewController extends BaseNewController {
 
     constructor($injector, context) {
         "use strict";
@@ -44,8 +44,8 @@ class WorkRequestNewController extends BaseNewController {
 }
 
 angular.module('app.workRequests')
-    .controller('WorkRequestNewController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
-        ($injector, ResourceService, MetadataService) => new WorkRequestNewController(
+    .controller('WorkRequestsNewController', ['$injector', 'WorkRequestResourceService', 'MetadataService',
+        ($injector, ResourceService, MetadataService) => new WorkRequestsNewController(
             $injector,
             {
                 resourceName: "work-requests",

@@ -14,34 +14,19 @@ var app = angular.module('crudApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngG
             //$locationProvider.html5Mode(true);
 
             $routeProvider
-                .when('/todos/new', {
-                    templateUrl: 'app/todos/detail.html',
-                    controller: 'TodoNewController',
-                    controllerAs: "dc"
-                })
-                .when('/todos/:id', {
-                    templateUrl: 'app/todos/detail.html',
-                    controller: 'TodoShowController',
-                    controllerAs: "dc"
-                })
-                .when('/todos', {
-                    templateUrl: 'app/todos/list.html',
-                    controller: 'TodoListController',
-                    controllerAs: "dc"
-                })
                 .when('/work-requests/new', {
                     templateUrl: 'app/work-requests/detail.html',
-                    controller: 'WorkRequestNewController',
+                    controller: 'WorkRequestsNewController',
                     controllerAs: "dc"
                 })
                 .when('/work-requests/:id', {
                     templateUrl: 'app/work-requests/detail.html',
-                    controller: 'WorkRequestEditController',
+                    controller: 'WorkRequestsEditController',
                     controllerAs: "dc"
                 })
                 .when('/work-requests', {
                     templateUrl: 'app/work-requests/list.html',
-                    controller: 'WorkRequestListController',
+                    controller: 'WorkRequestsListController',
                     controllerAs: "dc"
                 })
                 .when('/docs', {

@@ -29,18 +29,18 @@ angular.module('app.workRequests').factory('WorkRequestResourceService', ['$reso
 /**
 * Created by e1009811 on 5/1/2014.
 */
-var WorkRequestListController = (function (_super) {
-    __extends(WorkRequestListController, _super);
-    function WorkRequestListController() {
+var WorkRequestsListController = (function (_super) {
+    __extends(WorkRequestsListController, _super);
+    function WorkRequestsListController() {
         _super.apply(this, arguments);
     }
-    return WorkRequestListController;
+    return WorkRequestsListController;
 })(BaseListController);
 
-angular.module('app.workRequests').controller('WorkRequestListController', [
+angular.module('app.workRequests').controller('WorkRequestsListController', [
     '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
-        return new WorkRequestListController($injector, {
+        return new WorkRequestsListController($injector, {
             resourceName: "work-requests",
             formTag: "list",
             ngRefs: [],
@@ -52,9 +52,9 @@ angular.module('app.workRequests').controller('WorkRequestListController', [
 /**
 * Created by e1009811 on 5/1/2014.
 */
-var WorkRequestNewController = (function (_super) {
-    __extends(WorkRequestNewController, _super);
-    function WorkRequestNewController($injector, context) {
+var WorkRequestsNewController = (function (_super) {
+    __extends(WorkRequestsNewController, _super);
+    function WorkRequestsNewController($injector, context) {
         "use strict";
         _super.call(this, $injector, context);
         this.viewModel.requestTypeId = "ADDATM";
@@ -67,7 +67,7 @@ var WorkRequestNewController = (function (_super) {
         this.viewModel.tabStatus = "";
         this.viewModel.isReadonly = false;
     }
-    WorkRequestNewController.prototype.createItem = function (item) {
+    WorkRequestsNewController.prototype.createItem = function (item) {
         "use strict";
 
         /***** Special processing for couchdb sample app *****/
@@ -92,13 +92,13 @@ var WorkRequestNewController = (function (_super) {
         /***** Special processing for couchdb sample app *****/
         _super.prototype.createItem.call(this, item);
     };
-    return WorkRequestNewController;
+    return WorkRequestsNewController;
 })(BaseNewController);
 
-angular.module('app.workRequests').controller('WorkRequestNewController', [
+angular.module('app.workRequests').controller('WorkRequestsNewController', [
     '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
-        return new WorkRequestNewController($injector, {
+        return new WorkRequestsNewController($injector, {
             resourceName: "work-requests",
             formTag: "detail",
             ngRefs: [],
@@ -110,12 +110,12 @@ angular.module('app.workRequests').controller('WorkRequestNewController', [
 /**
 * Created by e1009811 on 5/1/2014.
 */
-var WorkRequestEditController = (function (_super) {
-    __extends(WorkRequestEditController, _super);
-    function WorkRequestEditController() {
+var WorkRequestsEditController = (function (_super) {
+    __extends(WorkRequestsEditController, _super);
+    function WorkRequestsEditController() {
         _super.apply(this, arguments);
     }
-    WorkRequestEditController.prototype.init = function () {
+    WorkRequestsEditController.prototype.init = function () {
         this.metadataBase = {
             "form": {
                 "tabs": {
@@ -139,19 +139,19 @@ var WorkRequestEditController = (function (_super) {
         _super.prototype.init.call(this);
     };
 
-    WorkRequestEditController.prototype.onGetItemSuccess = function (result) {
+    WorkRequestsEditController.prototype.onGetItemSuccess = function (result) {
         "use strict";
         _super.prototype.onGetItemSuccess.call(this, result);
         this.showEditable = !this.viewModel.isReadonly;
         this.isReadonly = this.viewModel.isReadonly;
     };
 
-    WorkRequestEditController.prototype.validateForm = function (thisForm) {
+    WorkRequestsEditController.prototype.validateForm = function (thisForm) {
         "use strict";
         return _super.prototype.validateForm.call(this, thisForm);
     };
 
-    WorkRequestEditController.prototype.updateItem = function (item) {
+    WorkRequestsEditController.prototype.updateItem = function (item) {
         "use strict";
 
         /***** Special processing for couchdb sample app *****/
@@ -160,13 +160,13 @@ var WorkRequestEditController = (function (_super) {
         /***** Special processing for couchdb sample app *****/
         _super.prototype.updateItem.call(this, item);
     };
-    return WorkRequestEditController;
+    return WorkRequestsEditController;
 })(BaseEditController);
 
-angular.module('app.workRequests').controller('WorkRequestEditController', [
+angular.module('app.workRequests').controller('WorkRequestsEditController', [
     '$injector', 'WorkRequestResourceService', 'MetadataService',
     function ($injector, ResourceService, MetadataService) {
-        return new WorkRequestEditController($injector, {
+        return new WorkRequestsEditController($injector, {
             resourceName: "work-requests",
             formTag: "detail",
             ngRefs: [],
@@ -191,29 +191,17 @@ var app = angular.module('crudApp', ['ui.bootstrap', 'xeditable', 'ngRoute', 'ng
         //commenting out this line (switching to hashbang mode) breaks the app
         //-- unless # is added to the templates
         //$locationProvider.html5Mode(true);
-        $routeProvider.when('/todos/new', {
-            templateUrl: 'app/todos/detail.html',
-            controller: 'TodoNewController',
-            controllerAs: "dc"
-        }).when('/todos/:id', {
-            templateUrl: 'app/todos/detail.html',
-            controller: 'TodoShowController',
-            controllerAs: "dc"
-        }).when('/todos', {
-            templateUrl: 'app/todos/list.html',
-            controller: 'TodoListController',
-            controllerAs: "dc"
-        }).when('/work-requests/new', {
+        $routeProvider.when('/work-requests/new', {
             templateUrl: 'app/work-requests/detail.html',
-            controller: 'WorkRequestNewController',
+            controller: 'WorkRequestsNewController',
             controllerAs: "dc"
         }).when('/work-requests/:id', {
             templateUrl: 'app/work-requests/detail.html',
-            controller: 'WorkRequestEditController',
+            controller: 'WorkRequestsEditController',
             controllerAs: "dc"
         }).when('/work-requests', {
             templateUrl: 'app/work-requests/list.html',
-            controller: 'WorkRequestListController',
+            controller: 'WorkRequestsListController',
             controllerAs: "dc"
         }).when('/docs', {
             templateUrl: 'api/angularCrud/index.html'

@@ -22,7 +22,7 @@ var ResourceService = (function () {
                 params: { docId: '@id' },
                 transformResponse: function (data) {
                     var response = angular.fromJson(data);
-                    console.log(response);
+                    //console.log(response);
                 }
             },
             delete: {
@@ -40,9 +40,10 @@ var ResourceService = (function () {
                 method: 'GET',
                 isArray: true,
                 transformResponse: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     var response = angular.fromJson(data);
-                    console.log(response);
+
+                    //console.log(response);
                     var result = [];
                     for (var i = 0, max = response.hits.total; i < max; i++) {
                         var item = response.hits.hits[i];
@@ -69,7 +70,8 @@ var ResourceService = (function () {
                     var response = angular.fromJson(data);
                     var result = response._source;
                     result["id"] = response._id;
-                    console.log(result);
+
+                    //console.log(result);
                     return result;
                 }
             },

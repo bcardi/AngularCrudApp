@@ -1,4 +1,4 @@
-///<reference path='references.ts' />
+///<reference path='../references.ts' />
 
 /**
  * Created by Bob on 5/6/2014.
