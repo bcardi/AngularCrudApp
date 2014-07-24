@@ -2,16 +2,15 @@
 
 <div class="workspace-header">
     <div class="row">
-        <label class="col-sm-1 control-label">Institution</label>
+        <label class="col-sm-2 control-label">Institution</label>
         <div class="col-sm-1">{{dc.viewModel.institution}}</div>
-        <div class="col-sm-1">{{dc.viewModel.institutionName}}</div>
         <label class="col-sm-2 control-label">Work Request #</label>
         <div class="col-sm-1">{{dc.viewModel.id}}</div>
         <label class="col-sm-1 control-label">State</label>
         <div class="col-sm-1">{{dc.viewModel.stateId}}</div>
         <div class="col-sm-4">
             <div class="pull-right">
-                <a href="#/{{dc.context.resourceName}}">Show List</a>
+                <a class="btn btn-link" href="#/{{dc.context.resourceName}}">Show List</a>
                 <button class="btn btn-link" ng-click="dc.showPreviousItem()">Previous</button>
                 <button class="btn btn-link" ng-click="dc.showNextItem()">Next</button>
             </div>
@@ -19,12 +18,13 @@
     </div>
 
     <div class="row">
-        <label class="col-sm-1 control-label">Device ID</label>
+        <label class="col-sm-2 control-label">Device ID</label>
         <div class="col-sm-1">{{dc.viewModel.deviceId}}</div>
-        <div class="col-sm-1"></div>
-        <label class="col-sm-2 control-label">Customer Work Order #</label>
+        <label class="col-sm-2 control-label">Customer Order #</label>
         <div class="col-sm-1">{{dc.viewModel.custRequestNo}}</div>
     </div>
+
+    <div><br/></div>
 </div>
 
 <!--
