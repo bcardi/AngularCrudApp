@@ -9,6 +9,7 @@ declare class ResourceService implements IResourceService {
     public searchModel: any;
     public getListTime: any;
     public metadata: any[];
+    public searchFilter: string;
     constructor($resource: any);
     public onGetListSuccess(httpResponse: any): any;
     public onGetListError(httpResponse: any): any;

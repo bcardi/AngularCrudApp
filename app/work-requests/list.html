@@ -28,7 +28,7 @@
 <div ng-show="dc.viewModel.length > 0">
     <section>
         <p>Use the Find field to locate items within the search results set.</p>
-        <input ng-model="query" placeholder="Find text">
+        <input ng-model="dc.context.resourceService.searchFilter" placeholder="Find text">
     </section>
     <!--Body content-->
     <table class="table table-striped table-hover">
@@ -48,7 +48,7 @@
             <!--<th>Actions</th>-->
         </tr>
         </thead>
-        <tr ng-repeat="item in dc.viewModel | filter:query | orderBy:reqNumber" ng-click="dc.showItem(item)">
+        <tr ng-repeat="item in dc.viewModel | filter:dc.context.resourceService.searchFilter | orderBy:reqNumber" ng-click="dc.showItem(item)">
             <td>{{item.id}}</td>
             <td>{{item.custRequestNo}}</td>
             <td>{{item.requestTypeId}}</td>

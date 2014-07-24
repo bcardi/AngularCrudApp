@@ -12,6 +12,7 @@ interface IResourceService{
     searchModel: any;
     getListTime: any;
     metadata: any[];
+    searchFilter: string;
 
     getList(params:any):ng.IPromise<any>;
     createItem(params:any, item:any):ng.IPromise<any>;

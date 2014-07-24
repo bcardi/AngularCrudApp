@@ -12,6 +12,7 @@ declare class ResourceService implements IResourceService {
     public searchModel: any;
     public getListTime: any;
     public metadata: any[];
+    public searchFilter: string;
     constructor($resource: any);
     public getList(params: any): ng.IPromise<any>;
     public createItem(params: any, item: any): ng.IPromise<any>;

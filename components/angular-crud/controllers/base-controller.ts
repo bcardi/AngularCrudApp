@@ -156,6 +156,7 @@ class BaseController {
         this.context.resourceService.items = result;
         this.context.resourceService.searchModel = _.cloneDeep(this.searchModel);
         this.context.resourceService.getListTime = Date.now();
+        this.context.resourceService.searchFilter = "";
         this.viewModel = this.context.resourceService.items;
         this.resetFocus = true;
         this.isModelLoaded = false;
