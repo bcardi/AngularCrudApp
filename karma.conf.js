@@ -27,6 +27,16 @@ module.exports = function(config) {
         "bower_components/lodash/dist/lodash.js",
         "components/angular-crud/angular-crud.js",
         "components/angular-crud-elasticsearch/resource-service.js",
+
+        "components/fis-ui-rwd/js/module.js",
+
+        'components/fis-ui-rwd/js/services/fis.ui.rwd.service.banner',
+        'components/fis-ui-rwd/js/services/fis.ui.rwd.service.navigation',
+        'components/fis-ui-rwd/js/directives/fis.ui.rwd.directive.banner',
+        'components/fis-ui-rwd/js/directives/fis.ui.rwd.directive.navigation',
+        'components/fis-ui-rwd/js/directives/fis.ui.rwd.directive.documentclick',
+        'components/fis-ui-rwd/js/directives/fis.ui.rwd.directive.workspace.resize',
+
         "app/app.js",
         "test/**/*-spec.js"
     ],
