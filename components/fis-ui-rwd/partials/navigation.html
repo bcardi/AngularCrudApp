@@ -1,0 +1,32 @@
+
+<div class="navigation" ng-class="toggleNavigation()">
+	<div class="navigationContent">
+		<div class="navbar navbar-default" ng-class="menuOpen()" role="navigation">
+			 
+			<!-- Title for sliding menu: only show when the menu is out -->
+			<span ng-switch on="sideNavData.open">
+			<div class="navbar-header" ng-switch-when="true">
+				<span class="menu-title">Menu</span>
+			</div>
+			<div class="navbar-header" ng-switch-default></div>
+			</span>
+	
+			<div class="navbar-collapse" ng-class="collapsedClass()">
+				<ul class="nav navbar-nav">
+					<li ng-repeat="link in navbar.links" ng-class="navClass(link)" >
+						<a ng-if="link.linkType == 'image'" href="#{{link.href}}" ><img ng-src="{{link.src}}" class="{{link.class}}"></img></a>
+						<a ng-if="link.linkType == 'link' || link.linkType == 'responsiveLink'" href="#{{link.href}}" class="top {{link.class}}" >{{link.desc}}</a>
+						<a ng-if="link.linkType == 'menu' || link.linkType == 'responsiveMenu'" href="" class="dropdown-toggle"
+							data-toggle="dropdown"><b class="caret"></b>{{link.desc}}
+						</a>
+						<ul ng-if="link.linkType == 'menu' || link.linkType == 'responsiveMenu'" class="dropdown-menu">
+							<li ng-repeat="menuItem in link.menuItems"> 
+								<a href="#{{menuItem.href}}" >{{menuItem.desc}}</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

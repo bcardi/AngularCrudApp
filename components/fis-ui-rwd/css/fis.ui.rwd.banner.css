@@ -1,0 +1,107 @@
+.banner {
+	width: 100%;
+	height: 48px;
+	background: #FFF;
+	border-bottom: 1px solid #AAA;
+	box-shadow: 1px 1px 2px 2x #999;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	padding-right: 20px;
+}
+
+.bannerContent {
+	max-width: 1140px;
+	background-color: #fff;
+	margin: 0px auto;
+	padding: 0px 0px 0px 12px;
+}
+
+.banner-group {
+	height: 28px;
+	float: left;
+}
+
+.banner-image {
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+.banner-product-name {
+	font-family: Arial;
+	font-size: 23px;
+	color:  #807f83;
+	padding: 0 0 0 10px;
+}
+
+.banner-product-name-border {
+    border-left: solid 1px #aaa;	
+}
+
+.banner-product-name-suffix {
+	font-family: Arial;
+	font-size: 23px;
+	color:  #8dc63c;
+}
+
+.banner-navigation {
+	display: inline;
+	float: right;
+}
+
+.banner ul {
+	margin: 5px 0px 0px 0px;
+	padding: 0px;
+}
+
+.banner li {
+	display: inline;
+}
+
+.banner a {
+	font-size: 14px;
+	color: #444;
+	padding: 5px;
+	margin-right: 7px;
+	margin-left: 7px;
+}
+
+.banner-list-item:after {
+	color: #DDD;
+	content: " | ";
+}
+
+.banner-list-item-last {
+	font-weight:bold;
+}
+
+@media ( min-width : 768px) {
+
+	li.bannerID {
+		display: none;
+	}
+	.banner li.responsiveBannerItem {
+		display: inline;
+	}
+}
+@media (max-width: 767px) {
+	/* min-width added to prevent the banner from wrapping - used when off-canvas is not displayed */
+	.banner {
+		min-width: 425px;
+	}
+
+	/* min-width added to prevent the banner from wrapping - used when off-canvas is displayed */
+	.banner-adjust-min-width {
+		min-width: 600px;
+	}
+	
+	li.bannerID {
+		display: inline;
+	}
+	.banner li.responsiveBannerItem {
+		display: none;
+	}
+
+
+}
+

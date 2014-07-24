@@ -1,0 +1,103 @@
+.panel-default>.panel-heading {
+	background-color: #f4f4f4;
+	border-color: #bbb;
+}
+
+.panel-heading {
+	padding: 10px;
+	background-color: #f4f4f4;
+	border-color: #bbb;
+}
+
+.panel-title {
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+
+.panel-body {
+	padding-left: 40px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+
+.panel-title:before {
+	/* symbol for "opening" panels */
+	content: '\25BC';
+	float: left;
+	color: #666666; /* adjust as needed */
+	padding-left: 5px;
+}
+
+.panel-title.collapsed {
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+
+.panel-title.collapsed:before {
+	/* symbol for "collapsed" panels */
+	content: '\25BA';
+	float: left;
+	/*color: #666666;  adjust as needed */
+	color: #aaa;
+}
+
+.accordion-header-highlighttxt {
+	font-weight: bold;
+	color: #007d8a; /* adjust as needed */
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}
+
+.accordion-details-highlighttxt {
+	font-weight: bold;
+	color: #007d8a; /* adjust as needed */
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}
+
+.accordion-header-txt {
+	font-weight: bold;
+	color: #007d8a; /* adjust as needed */
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}
+
+.accordion-header-table td {
+	padding-left: 10px;
+	line-height: 1.5;
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}
+
+/* .accordion-header-table th { */
+/* 	padding-left: 15px; */
+/* 	line-height: 1.5; */
+/* 	font-family: arial, sans-serif; */
+/* 	font-size: 16px; */
+/* } */
+
+.accordion-content-table td {
+/* 	padding-left: 30px; */
+	padding-right: 20px;
+	line-height: 1.5;
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}
+
+.accordion-content-label{
+	color: #777;
+}
+
+.accordion-content-text{
+	color: #333;
+}
+
+.accordion-content-table th {
+
+	/* 	padding-left: 30px; */
+	padding-right: 20px;
+	line-height: 1.5;
+	font-family: arial, sans-serif;
+	font-size: 16px;
+}

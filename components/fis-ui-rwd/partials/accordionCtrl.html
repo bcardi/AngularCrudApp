@@ -1,0 +1,66 @@
+<h1>Accordion component</h1>
+
+<div class="panel-group" id="accordion">
+	<!-- Looping the data array -->
+	<div class="panel panel-default"
+		data-ng-repeat="account in accountsArr">
+		<div class="panel-heading">
+			<h5
+				class="{{account.collapsed?'panel-title collapsed':'panel-title'}}"
+				data-toggle="collapse" data-parent="#accordion"
+				data-target="{{'#accordionDivId'+account.seqNo}}">
+				<table class="accordion-header-table">
+					<tr>
+						<td><span class="accordion-header-highlighttxt">{{account.accountType}}</span></td>
+						<td><span class="accordion-header-txt">
+								{{account.accountNumber}} <br />
+						</span></td>
+					</tr>
+					<!-- 					<tr> -->
+					<!-- 						<td>Balance:</td> -->
+					<!-- 						<td>{{account.balance|currency}}</td> -->
+					<!-- 					</tr> -->
+					<tr>
+						<td class="accordion-content-label">Available:</td>
+						<td class="accordion-content-text">{{account.available|currency}}</td>
+					</tr>
+					<tr>
+						<td class="accordion-content-label">Rate:</td>
+						<td class="accordion-content-text">{{account.rate|number:percentPrecision}}</td>
+					</tr>
+				</table>
+			</h5>
+		</div>
+		<div id="{{'accordionDivId'+account.seqNo}}"
+			class="{{account.collapsed?'panel-collapse collapse':'panel-collapse collapse in'}}">
+			<div class="panel-body">
+				<table class="accordion-content-table">
+					<tr>
+						<td class="accordion-content-label">Status:</td>
+						<td class="accordion-content-text">{{account.status}}</td>
+					</tr>
+					<tr>
+						<td class="accordion-content-label">Product:</td>
+						<td class="accordion-content-text">{{account.product}}</td>
+					</tr>
+				</table>
+				<hr></hr>
+				<table class="accordion-content-table">
+					<tr>
+						<th class="accordion-details-highlighttxt">Primary Contact</th>
+						<th class="accordion-details-highlighttxt">Mailing Address</th>
+					</tr>
+					<tr align="left">
+						<td class="accordion-content-text">{{account.primaryContactLn1}}</td>
+						<td class="accordion-content-text">{{account.mailingAddressLn1}}</td>
+					</tr>
+					<tr>
+						<td class="accordion-content-text">{{account.primaryContactLn2}}</td>
+						<td class="accordion-content-text">{{account.mailingAddressLn2}}</td>
+					</tr>
+				</table>
+				<hr></hr>
+			</div>
+		</div>
+	</div>
+</div>

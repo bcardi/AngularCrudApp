@@ -1,0 +1,379 @@
+/*!
+ * Bootstrap v3.1.1 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+.navigation {
+	width: 100%;
+	background: #888;
+}
+
+.navigationContent {
+	max-width: 1140px;
+	background-color: #777;
+	margin: 0px auto;
+	width: 100%;
+}
+
+.navbanner-wrapper {
+	width: 100%;
+}
+
+.navbar-default {
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=   false );
+}
+
+.navbar-default .navbar-nav>.active>a {
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=   false );
+}
+
+.navbar-brand,.navbar-nav>li>a {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+.navbar-inverse {
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=   false );
+}
+
+.navbar-inverse .navbar-nav>.active>a {
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=   false );
+}
+
+.navbar {
+	font-family: Arial;
+	font-size: 16px;
+	min-height: 40px !important;
+	border-style: none;
+	border-radius: 0px;	
+}
+
+.navbar-default {
+	background-color: #777777;
+	font: Arial 16px bold;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #FFFFFF;
+  background-color: #007D8A;
+}
+
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus
+{
+	background-color: #007D8A
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus
+{
+	background-color: #007D8A
+}
+
+.navbar-default {
+	border-color: #080808
+}
+
+.navbar-default .navbar-brand {
+	color: #FFFFFF
+}
+
+.navbar-default .navbar-brand:hover {
+	color: #FFFFFF
+}
+
+.navbar-default .navbar-nav {
+	font: Arial 16px bold
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #FFFFFF
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus
+	{
+	color: #FFFFFF
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus
+	{
+	color: #FFFFFF
+}
+
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus
+	{
+	color: #FFFFFF
+}
+
+.dropdown-menu {
+	background-color: #FFFFFF
+}
+
+.dropdown-menu>li>a {
+	color: #333333
+}
+
+.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus {
+	color: #007D8A
+}
+
+.navbar-default .navbar-nav>.dropdown>a .caret {
+	border-top-color: #FFFFFF
+}
+
+.navbar-default .navbar-nav>.dropdown>a:hover .caret {
+	border-top-color: #007D8A
+}
+
+.navbar-nav>li>a {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+}
+
+.navbar-collapse.in {
+  overflow-y: visible;
+}
+
+img.imageClass {
+   display: block;
+   width: 20px; /*width of your image*/
+   height: 20px; /*height of your image*/
+}
+
+/* Add for the Home nav-bar and off-canvas item */
+li a.homeNavBarClass {
+	background: url("../images/Home_white.png") center no-repeat;
+	width: 50px;
+	height: 40px;
+}
+
+
+@media ( min-width : 768px) {
+	
+	.navbar-toggle {
+		display: none !important;
+	}
+	.menu-title {
+		display: none !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-nav .open .dropdown-menu {
+	    position: static;
+	    float: none;
+	    width: auto;
+	    margin-top: 0;
+	    background-color: transparent;
+	    border: 0;
+	    box-shadow: none;
+	    padding-top: 0px;
+	    padding-bottom: 0px;
+  	}
+  	/*
+    .navbar-nav>a {
+  		height: 48px;
+  		line-height: 48px;
+  		vertical-align: middle;
+  		min-width: 175px;
+  		background-color: #666;
+  		border-bottom: 1px solid #777;
+  		padding-left: 15px;
+  		padding-right: 15px;
+  		font: 16px;
+  		color: #FFF;
+  }
+  .navbar-nav>a:active {
+  		background-color: #CCC;
+  		color: #333;
+  }
+  .navbar-nav .dropdown-menu>a {
+  		border-right: 1px solid #777;
+  		background-color: #FFF;
+  		font-weight: normal;
+  		color: #333;
+  }
+  .navbar-nav .dropdown-menu>a:active,
+  .navbar-nav .dropdown-menu>a:hover,
+  .navbar-nav .dropdown-menu>a:focus {
+  		background-color: #007D8A;
+   }
+   */
+
+ /**/
+  .navbar-nav .open .dropdown-menu > li > a {
+    line-height: 20px;
+  }
+  .navbar-nav .open .dropdown-menu > li > a,
+  .navbar-nav .open .dropdown-menu .dropdown-header {
+    padding: 5px 15px 5px 15px;
+  }
+  .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-nav .open .dropdown-menu > li > a:focus {
+  }
+  
+  .navbar-default .navbar-nav .open a.dropdown-toggle {
+    background-color: #CCC;
+    color: #333;
+  }
+
+  .navbar-nav .open .dropdown-menu > li > a {
+  	background-color: #FFF;
+    color: #333;
+    border-bottom: 1px solid #777;
+    border-right: 1px solid #777;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #333;
+    background-color: #FFF;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #333;
+    background-color: #FFF;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+  /**/
+	.navbar-nav > li > a > .caret {
+	    border-left: 4px solid;
+	    border-top: 4px solid transparent;
+	    border-bottom: 4px solid transparent;
+	    display: inline-block;
+	    height: 0;
+	    width: 0;
+	    margin-left: -10px;
+	    margin-right: 5px;
+	    vertical-align: middle;
+	}
+	.navbar-nav > li.open > a > .caret {
+	    border-top: 4px solid;
+	    border-left: 4px solid transparent;
+	    border-right: 4px solid transparent;
+	    display: inline-block;
+	    height: 0;
+	    width: 0;
+	    margin-left: -10px;
+	    margin-right: 5px;
+	    vertical-align: middle;
+	}
+	.navbar-header {
+		display: inline-block;
+		vertical-align: middle;
+		height: 48px;
+		line-height: 48px;
+		padding-left: 15px;
+		font-size: 14px;
+		font-weight: bold;
+		color: #FFF;
+		width: 100%;
+		background-color: #444;
+	}
+	.navbar-default.menu-in .navbar-header {
+		padding-left: 0px;
+	}
+	.navbar-toggle {
+		position: relative;
+		float: left;
+		padding: 0px 10px 0px 10px;
+		background-color: transparent;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		margin-right: 20px;
+	}
+	
+	.navbar-toggle .icon-bar {
+		background-color: #999999;
+		display: block;
+		width: 20px;
+		height: 3px;
+		border-radius: 2px;
+	}
+	.navbar-toggle .icon-bar + .icon-bar {
+		margin-top: 3px;
+	}
+
+  .navbar.navbar-default {
+   	float: left;
+   	margin-right: 10px;
+   	height: 100% !important;
+   	width: 100%;
+   }
+   
+   .menu-in {
+	   	width: 0px;
+	   	/*
+		-webkit-transition: width 10s linear 5s;
+		-moz-transition: width 10s linear 5s;
+		-o-transition: width 10s linear 5s;
+		transition: width 10s linear 5s;
+		*/
+   }
+   
+   .menu-out {
+	   	width: 30%;
+	   	min-width: 175px;
+	   	/*
+		-webkit-transition: width 10s linear 5s;
+		-moz-transition: width 10s linear 5s;
+		-o-transition: width 10s linear 5s;
+		transition: width 10s linear 5s;
+		*/
+   }
+   
+	.navigation {
+		float: left;
+		width: 0%;
+		height: 100%;
+		background: #777;
+		margin-right: 10px;
+	}
+   
+	.navigation-in {
+		width: 0%;
+		min-width: 0px;
+		-webkit-transition: width 0.3s linear;
+		-moz-transition: width 0.3s linear;
+		-o-transition: width 0.3s linear;
+		transition: width 0.3s linear;
+	}
+   
+	.navigation-out {
+		width: 30%;
+		min-width: 175px;
+		-webkit-transition: width 0.3s linear;
+		-moz-transition: width 0.3s linear;
+		-o-transition: width 0.3s linear;
+		transition: width 0.3s linear;
+	}
+
+	/* Add for the Home nav-bar and off-canvas item */
+	li a.homeNavBarClass {
+		background: none;
+		width: 100%;
+	}
+	li a.homeNavBarClass:after {
+	    content: "Home";
+	}
+
+   <!-- -->
+}
+

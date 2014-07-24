@@ -1,0 +1,34 @@
+
+<div class="banner" ng-class="adjustMinWidth()">
+	<div class="bannerContent">
+		<button type="button" class="navbar-toggle" ng-click="onHamburger()">
+			<span class="sr-only"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<div class="banner-group">
+			<span ng-if="banner.fi_image" class="banner-image"><img ng-src="{{banner.fi_image}}" /></span>
+			<span ng-if="banner.product_name" ng-class="bannerProductNameClass()">{{banner.product_name}}</span>
+			<span ng-if="banner.product_name_suffix" class="banner-product-name-suffix">{{banner.product_name_suffix}}</span>
+		</div>
+	
+		<div id="banner_navigation" class="banner-navigation">
+			<ul id="banner_links">
+				<li data-ng-repeat="link in banner.links"
+					ng-class="bannerListItemClass($last, link)">
+					<a ng-if="link.linkType == 'link' || link.linkType == 'responsiveLink'" class="banner-link" href=""
+						ng-click="bannerLinkOnClick(link)">{{link.desc}}</a> 
+					<a ng-if="link.linkType == 'menu' || link.linkType == 'responsiveMenu'" href="" data-toggle="dropdown"
+						class="dropdown-toggle">{{link.desc}} <b class="caret"></b></a>
+					<ul ng-if="link.linkType == 'menu' || link.linkType == 'responsiveMenu'" class="dropdown-menu">
+						<li ng-repeat="menuItem in link.menuItems">
+							<a href="" ng-click="bannerMenuItemsOnClick(menuItem)">{{menuItem.desc}}</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
