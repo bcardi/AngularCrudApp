@@ -3,7 +3,7 @@
 sampleApp.service('NavigationService', function($http) {
 	
     this.getNavigationContent = function() {
-    	return $http.post('Rest/navigation').then(function(response){return response.data;});
+    	return $http.get('app/navigation.json').then(function(response){return response.data;});
     };
  
     

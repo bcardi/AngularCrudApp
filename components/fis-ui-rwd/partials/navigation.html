@@ -13,7 +13,7 @@
 	
 			<div class="navbar-collapse" ng-class="collapsedClass()">
 				<ul class="nav navbar-nav">
-					<li ng-repeat="link in navbar.links" ng-class="navClass(link)" >
+					<li class="dropdown" ng-repeat="link in navbar.links" ng-class="navClass(link)" >
 						<a ng-if="link.linkType == 'image'" href="#{{link.href}}" ><img ng-src="{{link.src}}" class="{{link.class}}"></img></a>
 						<a ng-if="link.linkType == 'link' || link.linkType == 'responsiveLink'" href="#{{link.href}}" class="top {{link.class}}" >{{link.desc}}</a>
 						<a ng-if="link.linkType == 'menu' || link.linkType == 'responsiveMenu'" href="" class="dropdown-toggle"

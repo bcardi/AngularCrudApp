@@ -8,7 +8,7 @@ sampleApp.directive('fisUiRwdBanner', ['BannerService', 'SideNavData',
 		restrict : 'AE',
 		replace : 'true',
 		scope : {},
-		templateUrl : 'partials/banner.html',
+		templateUrl : 'components/fis-ui-rwd/partials/banner.html',
 		link: function(scope, elem, attrs) {
 			elem.bind('click', function() {
 			});

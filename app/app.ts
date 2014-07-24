@@ -5,7 +5,7 @@
  * Created by e1009811 on 5/1/2014.
  */
 
-var app = angular.module('crudApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests'])
+var app = angular.module('crudApp',['ui.bootstrap', 'xeditable', 'ngRoute', 'ngGrid', 'angularCrud', 'app.workRequests', 'AngularRefImpl'])
     .config(["$routeProvider", "$locationProvider",
         function ($routeProvider, $locationProvider) {
 

@@ -8,7 +8,7 @@ sampleApp.directive('fisUiRwdNavbar', ['NavigationService', 'SideNavData',
 		restrict: 'AE',
 		replace : 'true',
 		scope : {},
-		templateUrl : 'partials/navigation.html',
+		templateUrl : 'components/fis-ui-rwd/partials/navigation.html',
 		controller : [ '$scope', '$location', '$http', function($scope, $location, $http) {
 
 			//$scope.navbar = {"links": [{ "name": "Home", "href": "Home", "isActive": true, "linkType": "image", "class": "imageClass", "src": "images/Home_white.png"}, { "name": "Accounts", "href": "Accounts", "linkType": "link"},{ "name": "Transfers", "linkType": "menu", menuItems: [{"name": "Transfer 1", "href": "Transfer1"},{"name": "Transfer 2", "href": "Transfer2"}]},{ "name": "Offers", "href": "Offers", "linkType": "link"},{ "name": "Accordion", "href": "AccordionEx", "linkType": "link"},{ "name": "Responsive Grid", "href": "ResponsiveGrid", "linkType": "link"}]};

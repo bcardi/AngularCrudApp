@@ -1,0 +1,31 @@
+{
+    "fi_image": "components/fis-ui-rwd/images/FIS_RGB_logo-60px.jpg",
+    "product_name": "AngularJS",
+    "product_name_suffix": "Reference",
+    "links": [
+        {
+            "desc": "Menu",
+            "linkType": "responsiveMenu",
+            "menuItems": [
+                {
+                    "desc": "Action 1",
+                    "action": "alert('Action 1');"
+                },
+                {
+                    "desc": "Action 2",
+                    "action": "alert('Action 2');"
+                }
+            ]
+        },
+        {
+            "desc": "Help",
+            "linkType": "responsiveLink",
+            "action": "alert('Help');"
+        },
+        {
+            "desc": "Sign out",
+            "linkType": "link",
+            "action": "alert('Sign out');"
+        }
+    ]
+}

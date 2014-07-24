@@ -1,0 +1,25 @@
+{
+    "links": [
+        {
+            "desc1": "Home",
+            "href": "Home",
+            "linkType": "link",
+            "class": "homeNavBarClass",
+            "src": "components/fis-ui-rwd/images/Home_white.png"
+        },
+        {
+            "desc": "Work Requests",
+            "linkType": "menu",
+            "menuItems":[
+                {
+                    "desc":"List",
+                    "href":"work-requests"
+                },
+                {
+                    "desc":"New",
+                    "href":"work-requests/new"
+                }
+            ]
+        }
+    ]
+}

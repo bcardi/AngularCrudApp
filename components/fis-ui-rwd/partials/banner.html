@@ -15,7 +15,7 @@
 	
 		<div id="banner_navigation" class="banner-navigation">
 			<ul id="banner_links">
-				<li data-ng-repeat="link in banner.links"
+				<li class="dropdown" data-ng-repeat="link in banner.links"
 					ng-class="bannerListItemClass($last, link)">
 					<a ng-if="link.linkType == 'link' || link.linkType == 'responsiveLink'" class="banner-link" href=""
 						ng-click="bannerLinkOnClick(link)">{{link.desc}}</a> 
